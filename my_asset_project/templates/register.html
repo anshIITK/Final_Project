@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block start %}
+<!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                    <label for="{{ form.email.id }}">{{ form.email.label }}</label>
+                    {{ form.email(class="form-control", id=form.email.id) }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.username.id }}">{{ form.username.label }}</label>
+                    {{ form.username(class="form-control", id=form.username.id) }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password.id }}">{{ form.password.label }}</label>
+                    {{ form.password(class="form-control", id=form.password.id) }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.pass_confirm.id }}">{{ form.pass_confirm.label }}</label>
+                    {{ form.pass_confirm(class="form-control", id=form.pass_confirm.id) }}
+                </div>
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
