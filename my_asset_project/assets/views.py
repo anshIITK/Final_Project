@@ -38,7 +38,7 @@ def bulk_upload():
 
 
 #Add New Asset
-@add_new_asset.route('/add_new_asset', methods=['POST'])
+@add_new_asset.route('/add_asset', methods=['POST'])
 def add_asset():
     form = AddNewAssetForm()
 
@@ -73,3 +73,15 @@ def add_asset():
                                   monitor_speaker= form.monitor_speaker.data, ups_capacity= form.ups_capacity.data, ups_amc= form.ups_amc.data, ups_start_date= form.ups_start_date.data, 
                                   ups_end_date= form.ups_end_date.data, source_of_purchase= form.source_of_purchase.data, contract_id= form.contract_id.data, 
                                   invoice_amount= form.invoice_amount.data, invoice_date= form.invoice_date.data, invoice_upload= form.invoice_upload.data)
+        
+        db.session.add(new_asset)
+        db.session.commit()
+
+        next = request.args.get('next')
+
+        if next == None or not next[0]=='/':
+            next = url_for('core.index')
+
+            return redirect(next)
+    
+    return render_template('add_asset.html', form=form)
