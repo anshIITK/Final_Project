@@ -1,0 +1,890 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Asset Details </title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS for form styling -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: Arial, sans-serif;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+
+
+</head>
+<body>
+    
+    <div class="container">
+        <h1 class="text-center mb-4">Asset Details</h1>
+        <form class="flex-form">
+            <!-- First row -->
+            <div class="form-row">
+            
+                <div class="form-group flex-col">
+                    <label for="asset number">Asset number</label>
+                    <input type="text" class="form-control" id="asset number" name="asset number" required>
+                </div>
+                <!-- Continue with the pattern for the next 4 fields -->
+                <div class="form-group flex-col">
+                    <label for="Serial number">OEM Serial number</label>
+                    <input type="text" class="form-control" id="serial number" name="serial number" required>
+                </div>
+                <div class="form-group flex-col">
+                    <label for="System host name">System host name</label>
+                    <input type="text" class="form-control" id="System host name" name="System host name" >
+                </div>
+                <div class="form-group flex-col">
+                    <label for="IP address">IP address</label>
+                    <input type="text" class="form-control" id="IP address" name="IP address" >
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Product Category:</label>
+                    <select class="form-control" id="ProductCategory" name="ProductCategory" required>
+                        <option value="">Select an option</option>
+                        <option value="Desktop">Desktop</option>
+                        <option value="Laptop">laptop</option>
+                        <option value="Monitor">Monitor</option>
+                        <option value="server">server</option>
+                        <option value="UPS">UPS</option>
+                        <option value="Storage">Storage</option>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Mobile">Mobile</option>
+                    </select>
+                </div>
+                <div class="form-group flex-col">
+                    <label for="Product name">Product name</label>
+                    <input type="text" class="form-control" id="product name" name="Product name" required>
+                </div>
+                <div class="form-group flex-col">
+                    <label for="model/version">Product model/version</label>
+                    <input type="text" class="form-control" id="model/version" name="model/version" required>
+                </div>
+                <div class="form-group flex-col">
+                    <label for="brand">Manufacturer</label>
+                    <select class="form-control" id="brand" name="brand" onchange="toggleOtherBrand()" required>
+                        <option value="">Manufacturer</option>
+                        <option value="DELL">DELL</option>
+                        <option value="LENOVO">LENOVO</option>
+                        <option value="HP">HP</option>
+                        <option value="SAMSUNG">SAMSUNG</option>
+                        <option value="TOSHIBA">TOSHIBA</option>
+                        <option value="ASUS">ASUS</option>
+                        <option value="ACER">ACER</option>
+                        <option value="APPLE">APPLE</option>
+                        <option value="XIAOMI">XIAOMI</option>
+                        <option value="ONEPLUS">ONEPLUS</option>
+                        <option value="SEAGATE">SEAGATE</option>
+                        <option value="WD">WD</option>
+                        <option value="LG">LG</option>
+                        <option value="IBM">IBM</option>
+                        <option value="PANASONIC">PANASONIC</option>
+                        <option value="NOKIA">NOKIA</option>
+                        <option value="PHILLIPS">PHILLIPS</option>
+                        <option value="EPSON">EPSON</option>
+                        <option value="BENQ">BENQ</option>
+                        <option value="EWITT">EWITT</option>
+                        <option value="GOOGLE">GOOGLE</option>
+                        <option value="INTEL">INTEL</option>
+                        <option value="HCL">HCL</option>
+                        <option value="VAIO">VAIO</option>
+                        <option value="AVITA">AVITA</option>
+                        <option value="MSI">MSI</option>
+                        <option value="HITACHI">HITACHI</option>
+                        <option value="Others">Others</option>
+                        <option value="SONY">SONY</option>
+                        <option value="ZEBRONICS">ZEBRONICS</option>
+                        <option value="IBALL">IBALL</option>
+                        <option value="AOC">AOC</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    </div>
+               </div>
+       
+    <div class="form-group">
+        <div class="form-row">
+            <div class="form-group flex-col">
+            <label for="assetStatus">Asset Status:</label>
+            <select class="form-control" id="assetStatus" name="assetStatus" onchange="openUserDetails()" required>
+                <option value="">Select an option</option>
+                <option value="In Stock">In Stock</option>
+                <option value="Assigned">Assigned</option>
+                <option value="Not working">Not Working</option>
+                <option value="Retained">Retained</option>
+                <option value="End Of Life">End Of Life</option>
+                <option value="Transferred">Transferred</option>
+                <option value="Disposed">Disposed</option>
+            </select>
+        </div>
+        <div id="statusForm">
+            <!--Asset Status Form Will Appear Here -->
+        </div>
+    </div>
+</div>
+</form>
+</div>
+
+    <script>
+        function openUserDetails() {
+            const status = document.getElementById('assetStatus').value;
+            const statusForm = document.getElementById('statusForm');
+
+            statusForm.innerHTML = ''; // Clear previous content
+
+            if (status === 'Assigned'||status ==='Retained'|| status==='Transferred') {
+                statusForm.innerHTML = `
+                <div>
+                    <form>
+                        <div class="form-group">
+                            <label for="userName">User Name:</label>
+                            <input type="text" class="form-control" id="userName" name="userName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="employeeId">Employee ID:</label>
+                            <input type="text" class="form-control" id="employeeId" name="employeeId" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <select class="form-control" id="location" name="location" onchange="checkLocation()">
+                                <option value="">Select a location</option>
+                                <option value="Location 1">Residence</option>
+                                <option value="Location 2">Ministry</option>
+                                <option value="Location 3">office</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
+                        <div id="otherLocationContainer" class="form-group" style="display: none;">
+                            <label for="otherLocation">Other Location:</label>
+                            <input type="text" class="form-control" id="otherLocation" name="otherLocation">
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email ID:</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Contact:</label>
+                            <input type="tel" class="form-control" id="contact" name="contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="Company">Company</label>
+                            <select class="form-control" id="Company" name="Company" onchange="checkCompany()">
+                                <option value="">Select a company</option>
+                                <option value="Company 1">AIC</option>
+                                <option value="Company 2">WIPRO</option>
+                                <option value="Company 3">BHARAT IT</option>
+                                <option value="Company 4">INTELLECT</option>
+                                <option value="Company 5">PROGILITY</option>
+                                <option value="Others">Others</option>
+                            </select>
+                            <div id="otherCompanyContainer" class="form-group" style="display: none;">
+                                <label for="otherCompany">Other Company:</label>
+                                <input type="text" class="form-control" id="otherCompany" name="otherCompany">
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                `;
+            } 
+
+            }
+        
+    </script>
+</body>
+
+        
+        <div class="container">
+        <h5><strong>Warranty Details</strong></h5>
+       <div class="form-row">
+        <div class="form-group flex-col">
+            <label for="OSEM asset Warranty(months)">OEM asset Warranty(months)</label>
+            <select class="form-control" id="numberSelect" name="numberSelect">
+                <option value="">Select a number</option>
+            </select>
+        </div>
+        <div class="form-group flex-col">
+            <label for="OSEM Warranty expiry date">OEM Warranty Expiry date</label>
+            <input type="date" class="form-control" id="OSEM Warranty expiry date" name="OSEM Warranty expiry date" >
+        </div>
+       </div>
+        </div>
+        <form>
+            
+        <div class="container">
+            <h5><strong>  Insurance Details</strong></h5>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="insuranceCoverage">Insurance Coverage:</label>
+                        <select class="form-control" id="insuranceCoverage" name="insuranceCoverage" onchange="toggleInsuranceFields()">
+                            <option value="">Select coverage</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6" >
+                        <label for="insuranceCompany">Insurance Company:</label>
+                        <select class="form-control insurance-field" id="insuranceCompany" name="insuranceCompany" disabled>
+                            <option value="">Select coverage</option>
+                            <option value="UIIC">UIIC</option>
+                            <option value="NICIL">NICIL</option>
+                            <option value="NIACL">NIACL</option>
+                            <option value="OICL">OICL</option>
+                        </select>
+                    </div>
+    
+                        <div class="form-group col-md-6">
+                            <label for="policyNumber">Policy Number:</label>
+                            <input type="text" class="form-control insurance-field" id="policyNumber" name="policyNumber" disabled>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" class="form-control insurance-field" id="startDate" name="startDate" disabled>
+                        </div>
+                    
+                        <div class="form-group col-md-6">
+                            <label for="endDate">End Date:</label>
+                            <input type="date" class="form-control insurance-field" id="endDate" name="endDate" disabled>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="insuredAmount">Insured Amount:</label>
+                            <input type="text" class="form-control insurance-field" id="insuredAmount" name="insuredAmount" disabled>
+                        </div>
+                    </div>    
+                </form>
+            </div>
+
+    
+        <div class="container">
+            
+            <form enctype="multipart/form-data">
+                <h5><strong>Purchase Details</strong></h5>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="sourceOfPurchase">Source Of Purchase:</label>
+                        <input type="text" class="form-control" id="sourceOfPurchase" name="sourceOfPurchase" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="contractId">Contract ID:</label>
+                        <input type="text" class="form-control" id="contractId" name="contractId" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="invoiceAmount">Invoice Amount:</label>
+                        <input type="text" class="form-control" id="invoiceAmount" name="invoiceAmount" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="invoiceDate">Invoice Date:</label>
+                        <input type="date" class="form-control" id="invoiceDate" name="invoiceDate" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="invoiceFile">Upload Invoice (PDF, JPG, PNG):</label>
+                        <input type="file" class="form-control-file" id="invoiceFile" name="invoiceFile" accept=".pdf, .jpg, .jpeg, .png" required>
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+    <div class="container">
+        <form>
+            <h5><strong>Payment details</strong></h5>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="paymentDone">Payment Done (Yes/No):</label>
+                    <select class="form-control" id="paymentDone" name="paymentDone" onchange="togglePaymentFields()">
+                        <option value="">Select payment status</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="paymentDate">Payment Date:</label>
+                    <input type="date" class="form-control payment-field" id="paymentDate" name="paymentDate" disabled>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="voucherNumber">Voucher Number:</label>
+                    <input type="text" class="form-control payment-field" id="voucherNumber" name="voucherNumber" disabled>
+                </div>
+            </div>
+            <h5><strong>Supplier Details</strong></h5>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="supplierName">Supplier Name:</label>
+                    <input type="text" class="form-control" id="supplierName" name="supplierName">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="supplierContact">Supplier Contact:</label>
+                    <input type="text" class="form-control" id="supplierContact" name="supplierContact">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="supplierEmail">Supplier Email:</label>
+                    <input type="email" class="form-control" id="supplierEmail" name="supplierEmail">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="supplierLocation">Supplier Location Delhi (Yes/No):</label>
+                    <select class="form-control" id="supplierLocation" name="supplierLocation">
+                        <option value="">Select location status</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="incidentId">Incident ID:</label>
+                    <input type="text" class="form-control" id="incidentId" name="incidentId">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="remarks">Remarks:</label>
+                    <textarea class="form-control" id="remarks" name="remarks"></textarea>
+                </div>
+            </div>
+        
+        <div class="container">
+            <form>
+                <h5><strong>Important Dates</strong></h5>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="issueDate">Issue Date:</label>
+                        <input type="date" class="form-control" id="issueDate" name="issueDate">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="returnDate">Return Date:</label>
+                        <input type="date" class="form-control" id="returnDate" name="returnDate">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="disposalDate">Disposal Date:</label>
+                        <input type="date" class="form-control" id="disposalDate" name="disposalDate">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="disposalAmount">Disposal Amount:</label>
+                        <input type="text" class="form-control" id="disposalAmount" name="disposalAmount">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="retainDate">Retain Date:</label>
+                        <input type="date" class="form-control" id="retainDate" name="retainDate">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="retainedAmount">Retained Amount/WDV:</label>
+                        <input type="text" class="form-control" id="retainedAmount" name="retainedAmount">
+                    </div>
+                </div>
+                
+        <div class="container">
+                <h5><strong>Asset Transfer Details</strong></h5>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="transferDate">Transfer Date:</label>
+                        <input type="date" class="form-control" id="transferDate" name="transferDate">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="transferredFrom">Transferred From:</label>
+                        <input type="text" class="form-control" id="transferredFrom" name="transferredFrom">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="transferTo">Transfer To:</label>
+                        <input type="text" class="form-control" id="transferTo" name="transferTo">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="transferAmount">Transfer Amount:</label>
+                        <input type="text" class="form-control" id="transferAmount" name="transferAmount">
+                    </div>
+                </div>
+ <!-- Device Specifications Form -->
+                <div class="container mt-4">
+                    <h5><strong>Device specifications</strong></h5>
+                    <div class="form-group">
+                        <select class="form-control" id="deviceType" onchange="showDeviceSpecifications()">
+                            <option value="">Select a device type</option>
+                            <option value="laptopDesktop">Laptop/Desktop</option>
+                            <option value="printer">Printer</option>
+                            <option value="HDD Specs">HDD Specs</option>
+                            <option value="tabletMobile">Tablet/Mobile</option>
+                            <option value="monitor">Monitor</option>
+                            <option value="ups">UPS</option>
+                        </select>
+                    </div>
+                    <div id="specificationsForm">
+                        <!-- Device Specifications Form Will Appear Here -->
+                    </div>
+                </div>
+            
+                <script>
+                    function showDeviceSpecifications() {
+                        const deviceType = document.getElementById('deviceType').value;
+                        const specificationsForm = document.getElementById('specificationsForm');
+            
+                        specificationsForm.innerHTML = ''; // Clear previous content
+            
+                        if (deviceType === 'laptopDesktop') {
+                            specificationsForm.innerHTML = `
+                                <h5 class="mt-4">Laptop/Desktop Specifications</h5>
+                                <form>
+                                    <div class="form-group">
+                            <label for="os">Operating System:</label>
+                            <input type="text" class="form-control" id="os" name="os" placeholder="Enter Operating System">
+                        </div>
+                        <div class="form-group">
+                            <label for="hddType">HDD Type:</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Select RAM size</option>
+                    <option value="SATA">SATA</option>
+                    <option value="SSD">SSD</option>
+                    <option value="SAS">SAS</option>
+                    <option value="Others">Others</option>
+                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hddSize">HDD Size (GB):</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Select RAM size</option>
+                    <option value="128">128</option>
+                    <option value="256">256</option>
+                    <option value="512">512</option>
+                    <option value="1024">1024</option>
+                    <option value="2048">2048</option>
+                    <option value="4096">4096</option>
+                    <option value="Others">Others</option>
+                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ramType">RAM Type:</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Select RAM type</option>
+                    <option value="DDR">DDR</option>
+                    <option value="DDR2">DDR2</option>
+                    <option value="DDR3">DDR3</option>
+                    <option value="DDR4">DDR4</option>
+                    <option value="Others">Others</option>
+                </select>
+                        </div>
+                       
+            <div class="form-group">
+                <label for="ramSize">RAM Size:</label>
+                <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Select RAM size</option>
+                    <option value="0">0 GB</option>
+                    <option value="2">2 GB</option>
+                    <option value="4">4 GB</option>
+                    <option value="8">8 GB</option>
+                    <option value="16">16 GB</option>
+                    <option value="32">32 GB</option>
+                    <option value="64">64 GB</option>
+                    <option value="128">128 GB</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+                        <div class="form-group">
+                            <label for="ramFrequency">RAM Frequency (MHz):</label>
+                            <select class="form-control" id="ramFrequency" name="ramFrequency" onchange="checkRamFrequency()">
+                    <option value="">Select RAM frequency</option>
+                    <option value="3000">3000 MHz</option>
+                    <option value="3200">3200 MHz</option>
+                    <option value="3600">3600 MHz</option>
+                    <option value="4000">4000 MHz</option>
+                    <option value="4200">4200 MHz</option>
+                    <option value="4400">4400 MHz</option>
+                    <option value="2933">2933 MHz</option>
+                    <option value="2666">2666 MHz</option>
+                    <option value="2133">2133 MHz</option>
+                    <option value="1600">1600 MHz</option>
+                    <option value="1333">1333 MHz</option>
+                    <option value="1066">1066 MHz</option>
+                    <option value="800">800 MHz</option>
+                    <option value="1000">1000 MHz</option>
+                    <option value="667">667 MHz</option>
+                    <option value="533">533 MHz</option>
+                    <option value="400">400 MHz</option>
+                    <option value="200">200 MHz</option>
+                    <option value="266">266 MHz</option>
+                    <option value="300">300 MHz</option>
+                    <option value="333">333 MHz</option>
+                    <option value="Others">Others</option>
+                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ramExpandable">RAM Expandable Upto (GB):</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">RAM Expandable Upto</option>
+                    <option value="0">0 GB</option>
+                    <option value="2">2 GB</option>
+                    <option value="4">4 GB</option>
+                    <option value="8">8 GB</option>
+                    <option value="16">16 GB</option>
+                    <option value="32">32 GB</option>
+                    <option value="64">64 GB</option>
+                    <option value="128">128 GB</option>
+                    <option value="Others">Others</option>
+                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ramSlots">Number of RAM Slots:</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Select RAM size</option>
+                    <option value="0">0 GB</option>
+                    <option value="1">1 GB</option>
+                    <option value="2">2 GB</option>
+                    <option value="3">3 GB</option>
+                    <option value="4">4 GB</option>
+                    <option value="5">5 GB</option>
+                    <option value="Others">Others</option>
+                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hdmiPort">HDMI Port (Yes/No):</label>
+                            <select class="form-control" id="hdmiPort" name="hdmiPort">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="displaySize">Display Size (Inch):</label>
+                            <input type="number" class="form-control" id="displaySize" name="displaySize" placeholder="Enter Display Size">
+                        </div>
+                        <div class="form-group">
+                            <label for="graphicsCardSize">Graphics Card Size (GB):</label>
+     
+                    <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Select Graphic card size</option>
+                    <option value="0">0 GB</option>
+                    <option value="2">2 GB</option>
+                    <option value="4">4 GB</option>
+                    <option value="8">8 GB</option>
+                    <option value="16">16 GB</option>
+                    <option value="32">32 GB</option>
+                    <option value="64">64 GB</option>
+                    <option value="128">128 GB</option>
+                    <option value="Others">Others</option>
+                </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="graphicsCardVersion">Graphics Card Version:</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Graphic Card Version</option>
+                    <option value="Nvidia GeForce">NVidia GeForce</option>
+                    <option value="Intel Iris Xe">Intel Iris Xe</option>
+                    <option value="AMD Raedon">AMD Raedon</option>
+                    <option value="Others">Others</option>
+                </select>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                                </form>
+                            `;
+                        } else if (deviceType === 'printer') {
+                            specificationsForm.innerHTML = `
+                                <h5 class="mt-4">Printer Specifications</h5>
+                                <form>
+                                   
+                        <div class="form-group">
+                            <label for="printerType">Printer Type:</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">printer type</option>
+                    <option value="color">color</option>
+                    <option value="Mono">Mono</option>
+                    <option value="Others">Others</option>
+                        </div>
+                        <div class="form-group">
+                            <label for="printingType">Printing Type:</label>
+                            <input type="text" class="form-control" id="printingType" name="printingType" placeholder="Enter Printing Type">
+                        </div>
+                        <div class="form-group">
+                            <label for="printerToner">Printer Toner Name:</label>
+                            <input type="text" class="form-control" id="printerToner" name="printerToner" placeholder="Enter Printer Toner Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="connectivity">Connectivity:</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Connectivity</option>
+                    <option value="Wifi">Wifi</option>
+                    <option value="Ethernet">Ethernet</option>
+                    <option value="Both">Both</option>
+                   </select>
+                        </div>
+                
+                    </form>
+                            `;
+                }else if (deviceType === 'HDD Specs') {
+                            specificationsForm.innerHTML = `
+                                <h5 class="mt-4">HDD Specifications</h5>
+                                <form>
+                    
+                        <div class="form-group">
+                            <label for="hddSize">HDD Size (GB):</label>
+                            <input type="number" class="form-control" id="hddSize" name="hddSize" placeholder="Enter HDD Size">
+                        </div>
+                        <div class="form-group">
+                            <label for="hddType">HDD Type:</label>
+                            <input type="text" class="form-control" id="hddType" name="hddType" placeholder="Enter HDD Type">
+                        </div>
+                        <div class="form-group">
+                            <label for="Connectivity">Connectivity:</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Connectivity</option>
+                    <option value="USB">USB</option>
+                    <option value="Type C">Type C</option>
+                    <option value="Both">Both</option>
+                   </select>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                                </form>
+                            `;
+                        } else if (deviceType === 'tabletMobile') {
+                            specificationsForm.innerHTML = `
+                        
+                                <form>
+                                    <!-- Add tablet/mobile fields here -->
+                    <h5 class="text-center mb-4">Tablet/Mobile Specifications Form</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="os">Operating System:</label>
+                            <input type="text" class="form-control" id="os" name="os" placeholder="Enter Operating System">
+                        </div>
+                        <div class="form-group">
+                            <label for="storage">Storage (ROM) GB:</label>
+                            <input type="number" class="form-control" id="storage" name="storage" placeholder="Enter Storage (ROM) GB">
+                        </div>
+                        <div class="form-group">
+                            <label for="ramSize">RAM Size (GB):</label>
+                            <input type="number" class="form-control" id="ramSize" name="ramSize" placeholder="Enter RAM Size">
+                        </div>
+                        <div class="form-group">
+                            <label for="displaySize">Display Size (Inch):</label>
+                            <input type="number" class="form-control" id="displaySize" name="displaySize" placeholder="Enter Display Size">
+                        </div>
+                        <div class="form-group">
+                            <label for="stylus">Stylus (Yes/No):</label>
+                            <select class="form-control" id="stylus" name="stylus">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="connectivity">Connectivity:</label>
+                            <select class="form-control" id="ramSize" name="ramSize" onchange="checkRamSize()">
+                    <option value="">Connectivity</option>
+                    <option value="Wifi">Wifi</option>
+                    <option value="SIM">SIM</option>
+                    <option value="Both">Both</option>
+                   </select>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            
+                                </form>
+                            `;
+                        } else if (deviceType === 'monitor') {
+                            specificationsForm.innerHTML = `
+                                
+                                <form>
+                                   
+                <div class="container mt-4">
+                    <h5 class="text-center mb-4">Monitor Specifications Form</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="displaySize">Display Size (Inch):</label>
+                            <input type="number" class="form-control" id="displaySize" name="displaySize" placeholder="Enter Display Size">
+                        </div>
+                        <div class="form-group">
+                            <label for="hdmiPort">HDMI Port (Yes/No):</label>
+                            <select class="form-control" id="hdmiPort" name="hdmiPort">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="speaker">Speaker (Yes/No):</label>
+                            <select class="form-control" id="speaker" name="speaker">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            
+            
+                                </form>
+                            `;
+                        } else if (deviceType === 'ups') {
+                            specificationsForm.innerHTML = `
+                                
+                                <form>
+                                    <!-- Add UPS fields here -->
+                                    
+                <div class="container mt-4">
+                    <h5 class="text-center mb-4">UPS Specifications Form</h5>
+                    <form>
+                        <div class="form-group">
+                            <label for="upsCapacity">UPS Capacity (Kva):</label>
+                            <input type="number" class="form-control" id="upsCapacity" name="upsCapacity" placeholder="Enter UPS Capacity (Kva)">
+                        </div>
+                        <div class="form-group">
+                            <label for="amc">AMC (Yes/No):</label>
+                            <select class="form-control" id="amc" name="amc">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="startDate">Start Date:</label>
+                            <input type="date" class="form-control" id="startDate" name="startDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="endDate">End Date:</label>
+                            <input type="date" class="form-control" id="endDate" name="endDate">
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            
+            
+                                </form>
+                            `;
+                        }
+                    }
+                </script>
+                
+                <!-- Submit button -->
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    
+    </body>
+    </html>
+    
+    <script>
+        function togglePaymentFields() {
+            const paymentDone = document.getElementById('paymentDone');
+            const paymentFields = document.querySelectorAll('.payment-field');
+            
+            if (paymentDone.value === 'No') {
+                paymentFields.forEach(field => {
+                    field.disabled = true;
+                });
+            } else {
+                paymentFields.forEach(field => {
+                    field.disabled = false;
+                });
+            }
+        }
+    </script>
+
+
+    <!-- Link to Bootstrap JS and jQuery (optional for some Bootstrap features) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        
+       
+        function checkLocation() {
+            const locationDropdown = document.getElementById('location');
+            const otherLocationContainer = document.getElementById('otherLocationContainer');
+            const otherLocationInput = document.getElementById('otherLocation');
+            
+            if (locationDropdown.value === 'Others') {
+                otherLocationContainer.style.display = 'block';
+                otherLocationInput.setAttribute('required', 'required');
+            } else {
+                otherLocationContainer.style.display = 'none';
+                otherLocationInput.removeAttribute('required');
+            }
+        }
+        function checkCompany() {
+            const CompanyDropdown = document.getElementById('Company');
+            const otherCompanyContainer = document.getElementById('otherCompanyContainer');
+            const otherCompanyInput = document.getElementById('otherCompany');
+            
+            if (CompanyDropdown.value === 'Others') {
+                otherCompanyContainer.style.display = 'block';
+                otherCompanyInput.setAttribute('required', 'required');
+            } else {
+                otherComapnyContainer.style.display = 'none';
+                otherCompanyInput.removeAttribute('required');
+            }
+        }
+        function checkRamSize() {
+            var ramSizeDropdown = document.getElementById("ramSize");
+            var otherRamSizeContainer = document.getElementById("otherRamSizeContainer");
+            var otherRamSizeTextbox = document.getElementById("otherRamSize");
+            
+            if (ramSizeDropdown.value === "Others") {
+                otherRamSizeContainer.style.display = "block";
+                otherRamSizeTextbox.required = true;
+            } else {
+                otherRamSizeContainer.style.display = "none";
+                otherRamSizeTextbox.required = false;
+            }
+        }
+       
+        
+    </script>
+    <script>
+        // Generate options from 0 to 60 using JavaScript
+        const numberSelect = document.getElementById('numberSelect');
+        for (let i = 0; i <= 60; i++) {
+            const option = document.createElement('option');
+            option.value = i;
+            option.textContent = i;
+            numberSelect.appendChild(option);
+        }
+    </script>
+    <script>
+        function toggleInsuranceFields() {
+            const insuranceCoverage = document.getElementById('insuranceCoverage');
+            const insuranceFields = document.querySelectorAll('.insurance-field');
+            
+            if (insuranceCoverage.value === 'No') {
+                insuranceFields.forEach(field => {
+                    field.disabled = true;
+                });
+            } else {
+                insuranceFields.forEach(field => {
+                    field.disabled = false;
+                });
+            }
+        }
+    </script>
+    
+
+</body>
+</html>

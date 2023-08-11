@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    
 </head>
 <body>
     <ul class="nav">
@@ -13,24 +14,26 @@
             <a href="{{url_for('core.index')}}">Home</a>
         </li>
 
+        {%  if current_user.is_authenticated %}
 
         <li class="nav-link">
-            <a href="#">Log Out</a>
+            <a href="{{url_for('users.logout')}}">Log Out</a>
         </li>
         <li class="nav-link">
             <a href="#">Add New Asset</a>
         </li>
         <li class="nav-link">
-            <a href="#"> Bulk Upload Asset Data</a>
+            <a href="{{url_for('assets.bulk_upload')}}"> Bulk Upload Asset Data</a>
+        </li>
+        {% else %}
+        <li class="nav-link">
+            <a href="{{url_for('users.login')}}">Log In</a>
         </li>
 
         <li class="nav-link">
-            <a href="#">Log In</a>
+            <a href="{{url_for('users.register')}}">Register</a>
         </li>
-
-        <li class="nav-link">
-            <a href="#">Register</a>
-        </li>
+        {% endif %}
     </ul>
 
     <div class="container">
