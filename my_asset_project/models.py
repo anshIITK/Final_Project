@@ -117,7 +117,7 @@ class Asset_Details(db.Model):
     monitor_hdmi_port = db.Column(db.String(20))
     monitor_speaker = db.Column(db.String(20))
     ups_capacity = db.Column(db.String(20))
-    ups_amc = db.Column(db.String(20))
+    ups_amc = db.Column(db.String(20))  
     ups_start_date = db.Column(db.String(20))
     ups_end_date =db.Column(db.String(20))
     source_of_purchase = db.Column(db.String(20))
