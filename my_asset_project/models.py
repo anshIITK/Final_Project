@@ -8,14 +8,20 @@ def load_user(user_id):
 
 class User(db.Model, UserMixin):
     
-    __tablename__ = 'users'
+    __tablename__ = 'login_details'
     
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, default=1, autoincrement=True)
+    office = db.Column(db.String(64))
+    department = db.Column(db.String(64))
+    employee_id = db.Column(db.String(64))
     email = db.Column(db.String(64), unique=True, index=True)
     username = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
 
-    def __init__(self, email, username, password):
+    def __init__(self, office, department, employee_id, email, username, password):
+        self.office = office
+        self.department = department
+        self.employee_id = employee_id
         self.email = email
         self.username = username
         self.password_hash = generate_password_hash(password)
@@ -36,16 +42,32 @@ class Asset_Users(db.Model):
     user_contact_number = db.Column(db.String(20))
     company = db.Column(db.String(40))
     location = db.Column(db.String(50))
+    transfer_date = db.Column(db.String(50))
+    transfer_amount = db.Column(db.Integer)
+    transferred_from = db.Column(db.String(50))
+    transfer_to = db.Column(db.String(50))
+    issue_date = db.Column(db.String(50))
+    return_date = db.Column(db.String(50))
+    retain_date = db.Column(db.String(50))
+    retained_amount = db.Column(db.String(50))
 
     assets = db.relationship('Asset_Details',backref='assigned_user', lazy=True)
 
-    def __init__(self, emp_id, username, email, contact_number, company, location):
+    def __init__(self, emp_id, username, email, contact_number, company, location, transfer_date, transfer_amount, transferred_from, transfer_to, issue_date, return_date, retain_date, retained_amount):
         self.user_employee_id = emp_id
         self.username = username
         self.user_email = email
         self.user_contact_number = contact_number
         self.company = company
         self.location = location
+        self.transfer_date = transfer_date
+        self.transfer_amount = transfer_amount
+        self. transferred_from = transferred_from
+        self.transfer_to = transfer_to
+        self.issue_date = issue_date
+        self.return_date = return_date
+        self.retain_date = retain_date
+        self. retained_amount = retained_amount
 
 class Asset_Details(db.Model):
 
@@ -53,7 +75,7 @@ class Asset_Details(db.Model):
     asset_users = db.relationship(Asset_Users)
 
     
-    id = db.Column(db.Integer, primary_key= True)
+    id = db.Column(db.Integer, primary_key= True, default=1, autoincrement=True)
     user_emp_id = db.Column(db.String, db.ForeignKey('asset_users.user_employee_id'))
     asset_number = db.Column(db.String(20))
     product_category = db.Column(db.String(20))
@@ -84,10 +106,6 @@ class Asset_Details(db.Model):
     voucher_number = db.Column(db.String(20))
     disposal_date = db.Column(db.String(20))
     disposal_amount = db.Column(db.Integer)
-    transfer_date = db.Column(db.String(20))
-    transfer_amount = db.Column(db.Integer)
-    transferred_from = db.Column(db.String(20))
-    transfer_to = db.Column(db.String(20))
     desk_lap_operating_system = db.Column(db.String(20))
     desk_lap_hdd_type = db.Column(db.String(20))
     desk_lap_hdd_size = db.Column(db.Integer)
@@ -133,8 +151,7 @@ class Asset_Details(db.Model):
                 oem_asset_warranty, oem_warranty_expiry_date, insurance_coverage, insurance_company,
                 policy_number, insured_amount, start_date, end_date, supplier_name, supplier_contact,
                 supplier_location, supplier_email, incident_id, remarks, payment_done, payment_date,
-                voucher_number, disposal_date, disposal_amount, transfer_date, transfer_amount,
-                transferred_from, transfer_to, desk_lap_operating_system, desk_lap_hdd_type,
+                voucher_number, disposal_date, disposal_amount, desk_lap_operating_system, desk_lap_hdd_type,
                 desk_lap_hdd_size, desk_lap_ram_type, desk_lap_ram_size, desk_lap_ram_frequency,
                 desk_lap_ram_expandable_upto, desk_lap_no_of_ram_slots, desk_lap_hdmi_port,
                 desk_lap_display_size, desk_lap_graphics_card_size, desk_lap_graphics_card_version,
@@ -173,10 +190,6 @@ class Asset_Details(db.Model):
         self.voucher_number = voucher_number
         self.disposal_date = disposal_date
         self.disposal_amount = disposal_amount
-        self.transfer_date = transfer_date
-        self.transfer_amount = transfer_amount
-        self.transferred_from = transferred_from
-        self.transfer_to = transfer_to
         self.desk_lap_operating_system = desk_lap_operating_system
         self.desk_lap_hdd_type = desk_lap_hdd_type
         self.desk_lap_hdd_size = desk_lap_hdd_size

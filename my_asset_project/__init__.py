@@ -1,31 +1,31 @@
 from flask import Flask
-# from flask_sqlalchemy import SQLAlchemy
-from flask_mysqldb import MySQL
+from flask_sqlalchemy import SQLAlchemy
+# from flask_mysqldb import MySQL
 # import os
-# from flask_migrate import Migrate
+from flask_migrate import Migrate
 from flask_login import LoginManager
 
 app = Flask(__name__)
 
-# app.config['SECRET_KEY'] = 'mysecret'
+app.config['SECRET_KEY'] = 'mysecret'
 
 #########################################
 ###########DATABASE SETUP################
 #########################################
 # basedir = os.path.abspath(os.path.dirname(__file__))
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:mysql123@localhost/ams_flask'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# db = SQLAlchemy(app)
-# Migrate(app,db)
+db = SQLAlchemy(app)
+Migrate(app,db)
 
 
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'flask'
+# app.config['MYSQL_HOST'] = 'localhost'
+# app.config['MYSQL_USER'] = 'root'
+# app.config['MYSQL_PASSWORD'] = 'mysql@123'
+# app.config['MYSQL_DB'] = 'ams_flask'
  
-mysql = MySQL(app)
+# mysql = MySQL(app)
 ###################################################################
 #Login Configs
 login_manager = LoginManager()

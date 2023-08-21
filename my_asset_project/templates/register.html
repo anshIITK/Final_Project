@@ -8,6 +8,18 @@
             <form method="POST">
                 {{ form.hidden_tag() }}
                 <div class="form-group">
+                    <label for="{{ form.office.id }}">{{ form.office.label }}</label>
+                    {{ form.office(class="form-control", id=form.office.id) }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.department.id }}">{{ form.department.label }}</label>
+                    {{ form.department(class="form-control", id=form.department.id) }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.employee_id.id }}">{{ form.employee_id.label }}</label>
+                    {{ form.employee_id(class="form-control", id=form.employee_id.id) }}
+                </div>
+                <div class="form-group">
                     <label for="{{ form.email.id }}">{{ form.email.label }}</label>
                     {{ form.email(class="form-control", id=form.email.id) }}
                 </div>

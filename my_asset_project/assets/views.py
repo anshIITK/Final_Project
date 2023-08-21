@@ -5,11 +5,12 @@ from my_asset_project.assets.forms import BulkUploadForm, AddNewAssetForm
 import pandas as pd
 from my_asset_project.models import Asset_Details
 
-asset_upload = Blueprint('assets', __name__)
 add_new_asset = Blueprint('add_asset', __name__)
+asset_upload = Blueprint('assets', __name__)
+
 
 #Bulk Upload
-@asset_upload.route('/bulk_upload', methods=['GET', 'POST'])
+@asset_upload.route('/bulk_upload', methods=['POST', 'GET'])
 def bulk_upload():
     form = BulkUploadForm()
 
@@ -38,7 +39,7 @@ def bulk_upload():
 
 
 #Add New Asset
-@add_new_asset.route('/add_asset', methods=['POST'])
+@add_new_asset.route('/add_asset', methods=['POST', 'GET'])
 def add_asset():
     form = AddNewAssetForm()
 
@@ -59,8 +60,7 @@ def add_asset():
                                   incident_id = form.incident_id.data, remarks = form.remarks.data, payment_done= form.payment_done.data, 
                                   payment_date = form.payment_date.data, 
                                   voucher_number = form.voucher_number.data, disposal_date = form.disposal_date.data, disposal_amount = form.disposal_amount.data, 
-                                  transfer_date = form.transfer_date.data, transfer_amount = form.transfer_amount.data, transferred_from = form.transferred_from.data, 
-                                  transfer_to = form.transfer_to.data, desk_lap_operating_system = form.desk_lap_operating_system.data, desk_lap_hdd_type = form.desk_lap_hdd_type.data, 
+                                  desk_lap_operating_system = form.desk_lap_operating_system.data, desk_lap_hdd_type = form.desk_lap_hdd_type.data, 
                                   desk_lap_hdd_size = form.desk_lap_hdd_size.data, desk_lap_ram_type = form.desk_lap_ram_type.data, desk_lap_ram_size = form.desk_lap_ram_size.data, 
                                   desk_lap_ram_frequency = form.desk_lap_ram_frequency.data, desk_lap_ram_expandable_upto = form.desk_lap_ram_expandable_upto.data, 
                                   desk_lap_no_of_ram_slots = form.desk_lap_no_of_ram_slots.data, desk_lap_hdmi_port = form.desk_lap_hdmi_port.data, 
