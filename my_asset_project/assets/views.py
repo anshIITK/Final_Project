@@ -59,7 +59,7 @@ def add_asset():
                                   supplier_email = form.supplier_email.data, 
                                   incident_id = form.incident_id.data, remarks = form.remarks.data, payment_done= form.payment_done.data, 
                                   payment_date = form.payment_date.data, 
-                                  voucher_number = form.voucher_number.data, disposal_date = form.disposal_date.data, disposal_amount = form.disposal_amount.data, 
+                                  voucher_number = form.voucher_number.data, disposal_date = form.disposal_date.data, disposal_amount = form.disposal_amount.data, device_type = form.device_type.data, 
                                   desk_lap_operating_system = form.desk_lap_operating_system.data, desk_lap_hdd_type = form.desk_lap_hdd_type.data, 
                                   desk_lap_hdd_size = form.desk_lap_hdd_size.data, desk_lap_ram_type = form.desk_lap_ram_type.data, desk_lap_ram_size = form.desk_lap_ram_size.data, 
                                   desk_lap_ram_frequency = form.desk_lap_ram_frequency.data, desk_lap_ram_expandable_upto = form.desk_lap_ram_expandable_upto.data, 

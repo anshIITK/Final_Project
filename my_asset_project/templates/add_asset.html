@@ -1,1063 +1,677 @@
 {% extends "base.html" %}
 {% block content %}
-
- <div class="form-group"><!-- for whole html -->
-    <style>
-        body {
-            background-color: #f7f7f7;
-            font-family: Arial, sans-serif;
-        }
-        
-        .form-group {
-        
-            margin-bottom: 20px;
-            padding-right: 20px;
-        }
-        .form-row {
-        
+<h1 class="text-center mb-4">Add Asset Form</h1>
+<style>
+    body {
+        background-color: #f7f7f7;
+        font-family: Arial, sans-serif;
+    }
+    
+    .form-group {
+    
         margin-bottom: 20px;
         padding-right: 20px;
     }
-        
-        
-        .btn-primary {
-            background-color: #007bff;
-            border-color: #007bff;
-        }
-        .btn-primary:hover {
-            background-color: #0056b3;
-            border-color: #0056b3;
-        }
-        .collapsible {
-  background-color:#777;
-  color: white;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
+    .form-row {
+    
+    margin-bottom: 20px;
+    padding-right: 20px;
+}
+    
+    
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .collapsible {
+        background-color:#777;
+        color: white;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 15px;
 }
 .active, .collapsible:hover {
-  background-color: #0e0d0d;
+background-color: #0e0d0d;
 }
 
 .collapsible:after {
-  content: '\002B';
-  color: white;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
+content: '\002B';
+color: white;
+font-weight: bold;
+float: right;
+margin-left: 5px;
 }
 .active:after {
-  content: "\2212";
+content: "\2212";
 }
 .container1 {
-  padding: 0 18px;
-  display: none;
-  overflow: hidden;
-  background-color: #f1f1f1;
+padding: 0 18px;
+display: none;
+overflow: hidden;
+background-color: #f1f1f1;
 }
-    </style>
+</style>
+<form method="POST">
+    {{ form.hidden_tag() }}
     <button type="button" class="collapsible"><strong>Asset details</strong></button>
-  
     <div class="container1"><!-- upto asset details -->
-        <form class="flex-form" id="form1" method="POST">
-            <!-- First row -->
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="asset number">Asset number<span style="color: red;">*</span></label>
-                    <input type="text" class="form-control" id="asset number" name="asset number" required>
-    
-                </div>
-    
-                <div class="form-group col-md-4">
-                    <label for="Serial number">OEM Serial number<span style="color: red;">*</span></label>
-                    <input type="text" class="form-control" id="serial number" name="serial number" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="brand">Manufacturer<span style="color: red;">*</span></label>
-                    <select class="form-control" id="brand" name="brand" onchange="toggleOtherBrand()" required>
-                        <option value="">Select a manufacturer </option>
-                        <option value="DELL">DELL</option>
-                        <option value="LENOVO">LENOVO</option>
-                        <option value="HP">HP</option>
-                        <option value="SAMSUNG">SAMSUNG</option>
-                        <option value="TOSHIBA">TOSHIBA</option>
-                        <option value="ASUS">ASUS</option>
-                        <option value="ACER">ACER</option>
-                        <option value="APPLE">APPLE</option>
-                        <option value="XIAOMI">XIAOMI</option>
-                        <option value="ONEPLUS">ONEPLUS</option>
-                        <option value="SEAGATE">SEAGATE</option>
-                        <option value="WD">WD</option>
-                        <option value="LG">LG</option>
-                        <option value="IBM">IBM</option>
-                        <option value="PANASONIC">PANASONIC</option>
-                        <option value="NOKIA">NOKIA</option>
-                        <option value="PHILLIPS">PHILLIPS</option>
-                        <option value="EPSON">EPSON</option>
-                        <option value="BENQ">BENQ</option>
-                        <option value="EWITT">EWITT</option>
-                        <option value="GOOGLE">GOOGLE</option>
-                        <option value="INTEL">INTEL</option>
-                        <option value="HCL">HCL</option>
-                        <option value="VAIO">VAIO</option>
-                        <option value="AVITA">AVITA</option>
-                        <option value="MSI">MSI</option>
-                        <option value="HITACHI">HITACHI</option>
-                        <option value="Others">Others</option>
-                        <option value="SONY">SONY</option>
-                        <option value="ZEBRONICS">ZEBRONICS</option>
-                        <option value="IBALL">IBALL</option>
-                        <option value="AOC">AOC</option>
-                        <option value="Others">Others</option>
-                    </select>
-                    </div>
-               
-                
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.asset_number.id }}">Asset number<span style="color: red;">*</span></label>
+                {{ form.asset_number(class="form-control", id=form.asset_number.id, required="required") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.oem_serial_number.id }}">OEM Serial number<span style="color: red;">*</span></label>
+                {{ form.oem_serial_number(class="form-control", id=form.oem_serial_number.id, required="required") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.manufacturer.id }}">Manufacturer<span style="color: red;">*</span></label>
+                {{ form.manufacturer(class="form-control", id=form.manufacturer.id, onchange="toggleOtherBrand()", required="required") }}
                 
             </div>
-            <div class="form-row">
-                
-                <div class="form-group col-md-4">
-                    <label for="Product name">Product name<span style="color: red;">*</span></label>
-                    <input type="text" class="form-control" id="product name" name="Product name" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="model/version">Product model/version<span style="color: red;">*</span></label>
-                    <input type="text" class="form-control" id="model/version" name="model/version" required>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="assetCategory">Asset Category:</label>
-                    <select class="form-control" id="assetCategory" name="assetCategory" required>
-                        <option value="">Select asset category</option>
-                        <option value="High">High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
-                    </select>
-                </div>
-              
-               
+            <div class="form-group col-md-4" id="other_brand" style="display: none;">
+                <label for="{{ form.other_brand.id }}">Other Brand:<span style="color: red;">*</span></label>
+                {{ form.other_brand(class="form-control", id=form.other_brand.id, required="required") }}
             </div>
-            <div class="form-row">
-    
+            <script>
+                function toggleOtherBrand() {
+                    var manufacturerSelect = document.getElementById("{{ form.manufacturer.id }}");
+                    var otherBrandInput = document.getElementById("other_brand");
+            
+                    if (manufacturerSelect.value === "Others") {
+                        otherBrandInput.style.display = "block";
+                        otherBrandInput.querySelector("input").setAttribute("required", "required");
+                    } else {
+                        otherBrandInput.style.display = "none";
+                        otherBrandInput.querySelector("input").removeAttribute("required");
+                    }
+                }
+            </script>
+            
+            <div class="form-group col-md-4">
+                <label for="{{ form.product_name.id }}">Product name<span style="color: red;">*</span></label>
+                {{ form.product_name(class="form-control", id=form.product_name.id, required="required") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.model_version.id }}">Product model/version<span style="color: red;">*</span></label>
+                {{ form.model_version(class="form-control", id=form.model_version.id, required="required") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.asset_category.id }}">Asset Category:</label>
+                {{ form.asset_category(class="form-control", id=form.asset_category.id, required="required") }}
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="{{ form.asset_status.id }}">Asset Status:<span style="color: red;">*</span></label>
+                {{ form.asset_status(class="form-control", id=form.asset_status.id, onchange="openUserDetails()", required="required") }}
+            </div>
+            <script>
+                function openUserDetails() {
+                    const status = document.getElementById('asset_status').value;
+                    const statusForm = document.getElementById('statusForm');
+
+                    statusForm.innerHTML = ''; // Clear previous content
+
+                    if (status === 'Assigned') {
+                        statusForm.innerHTML = `
+            <div>
+                <div class="form-row">
                     <div class="form-group col-md-4">
-                        <label for="assetStatus">Asset Status:<span style="color: red;">*</span></label>
-                            <select class="form-control" id="assetStatus" name="assetStatus" onchange="openUserDetails()" required>
-                       <option value="">Select an option</option>
-                       <option value="In Stock">In Stock</option>
-                       <option value="Assigned">Assigned</option>
-                       <option value="Not working">Not Working</option>
-                       <option value="Retained">Retained</option>
-                       <option value="End Of Life">End Of Life</option>
-                       <option value="Transferred">Transferred</option>
-                       <option value="Disposed">Disposed</option>
-                   </select>
-               </div>
-               <div id="statusForm">
-                <!--Asset Status Form Will Appear Here -->
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="productCategory">Product Category:<span style="color: red;">*</span></label>
-                    <select class="form-control" id="ProductCategory" name="ProductCategory" onchange="toggleSystemHostName()" required>
-                        <option value="">Select an option</option>
-                        <option value="Desktop">Desktop</option>
-                        <option value="Laptop">Laptop</option>
-                        <option value="Monitor">Monitor</option>
-                        <option value="Server">Server</option>
-                        <option value="UPS">UPS</option>
-                        <option value="Storage">Storage</option>
-                        <option value="Tablet">Tablet</option>
-                        <option value="Mobile">Mobile</option>
-                    </select>
-                    <div id="systemHostNameField" style="display: none;">
-                        <label for="systemHostName">System Host Name:</label>
-                        <input type="text" id="systemHostName" name="systemHostName">
+                        <label for="{{ form.user_name.id }}">User Name:</label>
+                        {{ form.user_name(class="form-control", id=form.user_name.id) }}
                     </div>
-                </div>
-                    
-                    
                     <div class="form-group col-md-4">
-                        <label for="IP address">IP address</label>
-                        <input type="text" class="form-control" id="IP address" name="IP address" >
+                        <label for="{{ form.employee_id.id }}">Employee ID:<span style="color: red;">*</span></label>
+                        {{ form.employee_id(class="form-control", id=form.employee_id.id) }}
                     </div>
-              
-       
-        
+                    <div class="form-group col-md-4">
+                        <label for="{{ form.location.id }}">Location:<span style="color: red;">*</span></label>
+                        {{ form.location(class="form-control", id=form.location.id, onchange="checkLocation()") }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div id="otherLocationContainer" class="form-group" style="display: none;">
+                            <label for="{{ form.other_location.id }}">Other Location:</label>
+                            {{ form.other_location(class="form-control", id=form.other_location.id) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="{{ form.email.id }}">Email ID:</label>
+                        {{ form.email(class="form-control", id=form.email.id) }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="{{ form.contact.id }}">Contact:</label>
+                        {{ form.contact(class="form-control", id=form.contact.id) }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="{{ form.company.id }}">Company<span style="color: red;">*</span></label>
+                        {{ form.company(class="form-control", id=form.company.id, onchange="checkCompany()") }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        <div id="otherCompanyContainer" class="form-group" style="display: none;">
+                            <label for="{{ form.other_company.id }}">Other Company:</label>
+                            {{ form.other_company(class="form-control", id=form.other_company.id) }}
+                        </div>
+                    </div>
+                </div>
             </div>
-        </form>
+
+                        `;
+                    }
+            }
+            </script>
+            <div id="statusForm">
+                <!-- Asset Status Form Will Appear Here -->
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.product_category.id }}">Product Category:<span style="color: red;">*</span></label>
+                {{ form.product_category(class="form-control", id=form.product_category.id, onchange="toggleSystemHostName()", required="required") }}
+                <div id="systemHostNameField" style="display: none;">
+                    <label for="{{ form.system_host_name.id }}">System Host Name:</label>
+                    {{ form.system_host_name(type="text", class="form-control", id=form.system_host_name.id) }}
+                </div>
+                <script>
+                    function toggleSystemHostName() {
+                        var productCategoryField = document.getElementById("{{ form.product_category.id }}");
+                        var systemHostNameField = document.getElementById("systemHostNameField");
+                
+                        if (productCategoryField.value === "Desktop" || productCategoryField.value === "Laptop"|| productCategoryField.value === "Monitor") {
+                            systemHostNameField.style.display = "block";
+                        } else {
+                            systemHostNameField.style.display = "none";
+                        }
+                    }
+                </script>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.ip_address.id }}">IP address</label>
+                {{ form.ip_address(type="text", class="form-control", id=form.ip_address.id) }}
+            </div>
+        </div>   
     </div>
 
-    <script>
-        function openUserDetails() {
-            const status = document.getElementById('assetStatus').value;
-            const statusForm = document.getElementById('statusForm');
-
-            statusForm.innerHTML = ''; // Clear previous content
-
-            if (status === 'Assigned') {
-                statusForm.innerHTML = `
-                <div>
-                    <form>
-                        <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="userName">User Name:</label>
-                            <input type="text" class="form-control" id="userName" name="userName" required>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="employeeId">Employee ID:<span style="color: red;">*</span></label>
-                            <input type="text" class="form-control" id="employeeId" name="employeeId" required>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="location">Location:<span style="color: red;">*</span></label>
-                            <select class="form-control" id="location" name="location" onchange="checkLocation()">
-                                <option value="">Select a location</option>
-                                <option value="Location 1">Residence</option>
-                                <option value="Location 2">Ministry</option>
-                                <option value="Location 3">office</option>
-                                <option value="Others">Others</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                        <div id="otherLocationContainer" class="form-group" style="display: none;">
-                            <label for="otherLocation">Other Location:</label>
-                            <input type="text" class="form-control" id="otherLocation" name="otherLocation">
-                        </div>
-                        </div>
-                        </div>
-                        <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="email">Email ID:</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="contact">Contact:</label>
-                            <input type="tel" class="form-control" id="contact" name="contact" required>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="Company">Company<span style="color: red;">*</span></label>
-                            <select class="form-control" id="Company" name="Company" onchange="checkCompany()">
-                                <option value="">Select a company</option>
-                                <option value="Company 1">AIC</option>
-                                <option value="Company 2">WIPRO</option>
-                                <option value="Company 3">BHARAT IT</option>
-                                <option value="Company 4">INTELLECT</option>
-                                <option value="Company 5">PROGILITY</option>
-                                <option value="Others">Others</option>
-                            </select>
-                            </div>
-                            <div class="form-group col-md-4">
-                            <div id="otherCompanyContainer" class="form-group" style="display: none;">
-                                <label for="otherCompany">Other Company:</label>
-                                <input type="text" class="form-control" id="otherCompany" name="otherCompany">
-                            </div>
-                        </div>
-            
-                    </form>
-
-                </div>
-                `;
-            } 
-           else if (status ==='Retained') {
-                statusForm.innerHTML = `
-                <div class="form-row">
-                <div class="form-group col-md-4">
-                            <label for="employeeId">Employee ID:</label>
-                            <input type="text" class="form-control" id="employeeId" name="employeeId" required>
-                        </div>
-                <div class="form-group col-md-4">
-                        <label for="retainDate">Retain Date:</label>
-                        <input type="date" class="form-control" id="retainDate" name="retainDate">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="retainedAmount">Retained Amount/WDV:</label>
-                        <input type="text" class="form-control" id="retainedAmount" name="retainedAmount">
-                    </div> 
-                    </div>
-                    `;
-            } 
-            else if (status==='Transferred') {
-                statusForm.innerHTML = `
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                            <label for="employeeId">Employee ID:</label>
-                            <input type="text" class="form-control" id="employeeId" name="employeeId" required>
-                        </div>
-                <div class="form-group col-md-4">
-                    <label for="transferDate">Transfer Date:</label>
-                    <input type="date" class="form-control" id="transferDate" name="transferDate">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="transferredFrom">Transferred From:</label>
-                    <input type="text" class="form-control" id="transferredFrom" name="transferredFrom">
-                </div>
-                </div>
-                <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="transferTo">Transfer To:</label>
-                    <input type="text" class="form-control" id="transferTo" name="transferTo">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="transferAmount">Transfer Amount:</label>
-                    <input type="text" class="form-control" id="transferAmount" name="transferAmount">
-                </div>
-        </div> `;
-
-            }
-            else if (status==='Disposed') {
-                statusForm.innerHTML = `
-               <form>
-                 <div class='form-row'>
-                    <div class="form-group col-md-4">
-                        <label for="disposalDate">Disposal Date:</label>
-                        <input type="date" class="form-control" id="disposalDate" name="disposalDate">
-                    </div>
-                    
-                    <div class="form-group col-md-4">
-                        <label for="disposalAmount">Disposal Amount:</label>
-                        <input type="text" class="form-control" id="disposalAmount" name="disposalAmount">
-                    </div>
-                    </div>
-                 </form>  
-                    
-            `;
-
-        }
-      
-    }
-
-    
-            function toggleSystemHostName() {
-            const ProductCategory = document.getElementById("ProductCategory").value;
-            const systemHostNameField = document.getElementById("systemHostNameField");
-            
-            if (ProductCategory === "Desktop" || ProductCategory === "Laptop" || ProductCategory === "Monitor") {
-                systemHostNameField.style.display = "block";
-            } else {
-                systemHostNameField.style.display = "none";
-            }
-        }
-       
-        
-    </script>
-
-        <button type="button" class="collapsible"><strong>Warranty Details</strong> </button>
-        <div class="container1"><!--for warranty details -->
-    <form id="form2",method='post'>
-          <div class="form-row">
+    <button type="button" class="collapsible"><strong>Warranty Details</strong> </button>
+    <div class="container1">
+        <div class="form-row">
             <div class="form-group col-md-4">
-            <label for="OSEM asset Warranty(months)">OEM asset Warranty(months)<span style="color: red;">*</span></label>
-            <select class="form-control" id="numberSelect" name="numberSelect">
-                <option value="">Select a number</option>
-            </select>
-             </div>
-             <div class="form-group col-md-4">
-            <label for="OSEM Warranty expiry date">OEM Warranty Expiry date<span style="color: red;">*</span></label>
-            <input type="date" class="form-control" id="OSEM Warranty expiry date" name="OSEM Warranty expiry date" >
-           </div>
-       </div>
+                <label for="{{ form.oem_asset_warranty.id }}">OEM asset Warranty(months)<span style="color: red;">*</span></label>
+                {{ form.oem_asset_warranty(class="form-control", id=form.oem_asset_warranty.id) }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.oem_warranty_expiry_date.id }}">OEM Warranty Expiry date<span style="color: red;">*</span></label>
+                {{ form.oem_warranty_expiry_date(class="form-control", id=form.oem_warranty_expiry_date.id) }}
+            </div>
         </div>
+        <script>
+            function toggleInsuranceFields() {
+                var insuranceCoverageField = document.getElementById("{{ form.insurance_coverage.id }}");
+                var insuranceFields = document.querySelectorAll(".insurance-field");
         
-        <button type="button" class="collapsible"><strong>Insurance Details</strong></button>   
-        <div class="container1"><!--for Insurance details -->
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="insuranceCoverage">Insurance Coverage:</label>
-                        <select class="form-control" id="insuranceCoverage" name="insuranceCoverage" onchange="toggleInsuranceFields()">
-                            <option value="">Select coverage</option>
-                            <option value="Yes">Yes</option>
-                            <option value="No">No</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="insuranceCompany">Insurance Company:</label>
-                        <select class="form-control insurance-field" id="insuranceCompany" name="insuranceCompany" disabled>
-                            <option value="">Select company</option>
-                            <option value="UIIC">UIIC</option>
-                            <option value="NICIL">NICIL</option>
-                            <option value="NIACL">NIACL</option>
-                            <option value="OICL">OICL</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-4">
-                            <label for="policyNumber">Policy Number:</label>
-                            <input type="text" class="form-control insurance-field" id="policyNumber" name="policyNumber" disabled>
-                        </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                            <label for="startDate">Start Date:</label>
-                            <input type="date" class="form-control insurance-field" id="startDate" name="startDate" disabled>
-                        </div>
-                    
-                        <div class="form-group col-md-4">
-                            <label for="endDate">End Date:</label>
-                            <input type="date" class="form-control insurance-field" id="endDate" name="endDate" disabled>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="insuredAmount">Insured Amount:</label>
-                            <input type="text" class="form-control insurance-field" id="insuredAmount" name="insuredAmount" disabled>
-                        </div>
-                    </div>    
-                
-            </div>
-    </form>
-
-            <button type="button" class="collapsible"><strong>Purchase Details</strong></button>
-                <div class="container1"><!--for purchase details -->
-                    <form enctype="multipart/form-data",id='form3',method='post'>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="sourceOfPurchase">Source Of Purchase:</label>
-                        <input type="text" class="form-control" id="sourceOfPurchase" name="sourceOfPurchase" required>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="contractId">Contract ID:</label>
-                        <input type="text" class="form-control" id="contractId" name="contractId" required>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="invoiceAmount">Invoice Amount:<span style="color: red;">*</span></label>
-                        <input type="text" class="form-control" id="invoiceAmount" name="invoiceAmount" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="invoiceDate">Invoice Date:<span style="color: red;">*</span></label>
-                        <input type="date" class="form-control" id="invoiceDate" name="invoiceDate" required>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <div class="container">
-
-                            <!-- File Upload Form -->
-                            <form enctype="multipart/form-data" action="/upload" method="POST">
-                                <div class="form-group">
-                                    <label for="invoiceFiles">Upload Invoices (PDF, JPG, PNG) - Maximum 3 files:</label>
-                                    <input type="file" class="form-control-file" id="invoiceFiles" name="invoiceFiles[]" multiple accept=".pdf, .jpg, .jpeg, .png" max="3" required>
-                                    
-                                </div>
-                                <button type="button" onclick="uploadFiles()">Upload</button>
-                            </form>
-                            
-                            <!-- Display Uploaded Files for Download -->
-                            <h5>Uploaded Files:</h5>
-                            <ul id="downloadList">
-                                <!-- Download links will be added dynamically here -->
-                            </ul>
-                        
-                            <!-- Your existing HTML content -->
-                        
-                        </div>
-                    
-                </div>
-                </div>
-            </form>
-                </div>
-               
-        <form id="form4",method='post'> 
-            <button type="button" class="collapsible"><strong>Payment details</strong></button>
-           
-            <div class="container1"> <!--Payment details-->
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                    <label for="paymentDone">Payment Done (Yes/No):</label>
-                    <select class="form-control" id="paymentDone" name="paymentDone" onchange="togglePaymentFields()">
-                        <option value="">Select payment status</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="paymentDate">Payment Date:</label>
-                    <input type="date" class="form-control payment-field" id="paymentDate" name="paymentDate" disabled>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="voucherNumber">FMS Invoice Number:</label>
-                    <input type="text" class="form-control payment-field" id="voucherNumber" name="voucherNumber" disabled>
-                </div>
-            </div>
-            </div>
-            
-            <button type="button" class="collapsible"><strong>Supplier Details</strong></button>   
-        <div class="container1">
-            <div class="form-row">
-                    <div class="form-group col-md-4">
-                    <label for="supplierName">Supplier Name:<span style="color: red;">*</span></label>
-                    <input type="text" class="form-control" id="supplierName" name="supplierName">
-                </div>
-                    <div class="form-group col-md-4">
-                    <label for="supplierContact">Supplier Contact:<span style="color: red;">*</span></label>
-                    <input type="text" class="form-control" id="supplierContact" name="supplierContact">
-                </div>
-                    <div class="form-group col-md-4">
-                    <label for="supplierEmail">Supplier Email:</label>
-                    <input type="email" class="form-control" id="supplierEmail" name="supplierEmail">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="supplierLocation">Supplier Location Delhi (Yes/No):</label>
-                    <select class="form-control" id="supplierLocation" name="supplierLocation">
-                        <option value="">Select location status</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="incidentId">Incident ID:</label>
-                    <input type="text" class="form-control" id="incidentId" name="incidentId">
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="remarks">Remarks:</label>
-                    <textarea class="form-control" id="remarks" name="remarks"></textarea>
-                </div>
-            </div>
-         </div>
-
-        
+                insuranceFields.forEach(function (field) {
+                    field.disabled = insuranceCoverageField.value !== "Yes";
+                });
+            }
+        </script>
+    </div>
     
-            
-     </form>
-     
- <!-- Device Specifications Form -->
-          <form id="form5",method='post'>
-            <button type="button" class="collapsible"><strong>Device specifications</strong></button>
-                <div class="container1">
-                    
-                    <h5></h5>
-                    <div class="form-group">
-                        <select class="form-control" id="deviceType" onchange="showDeviceSpecifications()">
-                            <option value="">Select a device type</option>
-                            <option value="laptopDesktop">Laptop/Desktop</option>
-                            <option value="printer">Printer</option>
-                            <option value="HDD Specs">HDD Specs</option>
-                            <option value="tabletMobile">Tablet/Mobile</option>
-                            <option value="monitor">Monitor</option>
-                            <option value="ups">UPS</option>
-                        </select>
-                    </div>
-                    <div id="specificationsForm">
-                        <!-- Device Specifications Form Will Appear Here -->
-                    </div>
-                </div>
-            
-                <script>
-                    function showDeviceSpecifications() {
-                        const deviceType = document.getElementById('deviceType').value;
-                        const specificationsForm = document.getElementById('specificationsForm');
-            
-                        specificationsForm.innerHTML = ''; // Clear previous content
-            
-                        if (deviceType === 'laptopDesktop') {
-                            specificationsForm.innerHTML = `
-                                
-                                <form id='form6.1', method='post'>
-                            <div class="form-row">
-                                   <div class="form-group col-md-4">
-                                
-                                  <label for="os">Operating System:</label>
-                                  <input type="text" class="form-control" id="os" name="os" placeholder="Enter Operating System">
-                                      </div>
-                                      <div class="form-group col-md-4">
-                            <label for="hddType">HDD Type:</label>
-                            <select class="form-control" id="check" name="check" onchange="check()" >
-                    <option value="">Select HDD type</option>
-                    <option value="SATA">SATA</option>
-                    <option value="SSD">SSD</option>
-                    <option value="SAS">SAS</option>
-                    <option value="Others">Others</option>
-                </select>
-                        </div>
-                        
-                        <div class="form-group col-md-4">
-                            <label for="hddSize">HDD Size (GB):</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Select HDD size</option>
-                    <option value="128">128</option>
-                    <option value="256">256</option>
-                    <option value="512">512</option>
-                    <option value="1024">1024</option>
-                    <option value="2048">2048</option>
-                    <option value="4096">4096</option>
-                    <option value="Others">Others</option>
-                </select>
-                        </div>
-                        
-                        </div>
-                        <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="ramType">RAM Type:</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Select RAM type</option>
-                    <option value="DDR">DDR</option>
-                    <option value="DDR2">DDR2</option>
-                    <option value="DDR3">DDR3</option>
-                    <option value="DDR4">DDR4</option>
-                    <option value="Others">Others</option>
-                </select>
-                        </div>
-    
-                       
-                        <div class="form-group col-md-4">
-                <label for="ramSize">RAM Size:</label>
-                <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Select RAM size</option>
-                    <option value="0">0 GB</option>
-                    <option value="2">2 GB</option>
-                    <option value="4">4 GB</option>
-                    <option value="8">8 GB</option>
-                    <option value="16">16 GB</option>
-                    <option value="32">32 GB</option>
-                    <option value="64">64 GB</option>
-                    <option value="128">128 GB</option>
-                    <option value="Others">Others</option>
-                </select>
+    <button type="button" class="collapsible"><strong>Insurance Details</strong></button>
+    <div class="container1">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.insurance_coverage.id }}">Insurance Coverage:</label>
+                {{ form.insurance_coverage(class="form-control", id=form.insurance_coverage.id, onchange="toggleInsuranceFields()") }}
             </div>
             <div class="form-group col-md-4">
-                            <label for="ramFrequency">RAM Frequency (MHz):</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Select RAM frequency</option>
-                    <option value="3000">3000 MHz</option>
-                    <option value="3200">3200 MHz</option>
-                    <option value="3600">3600 MHz</option>
-                    <option value="4000">4000 MHz</option>
-                    <option value="4200">4200 MHz</option>
-                    <option value="4400">4400 MHz</option>
-                    <option value="2933">2933 MHz</option>
-                    <option value="2666">2666 MHz</option>
-                    <option value="2133">2133 MHz</option>
-                    <option value="1600">1600 MHz</option>
-                    <option value="1333">1333 MHz</option>
-                    <option value="1066">1066 MHz</option>
-                    <option value="800">800 MHz</option>
-                    <option value="1000">1000 MHz</option>
-                    <option value="667">667 MHz</option>
-                    <option value="533">533 MHz</option>
-                    <option value="400">400 MHz</option>
-                    <option value="200">200 MHz</option>
-                    <option value="266">266 MHz</option>
-                    <option value="300">300 MHz</option>
-                    <option value="333">333 MHz</option>
-                    <option value="Others">Others</option>
-                </select>
-                        </div>
-                        </div>
-                        <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="ramExpandable">RAM Expandable Upto (GB):</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">RAM Expandable Upto</option>
-                    <option value="0">0 GB</option>
-                    <option value="2">2 GB</option>
-                    <option value="4">4 GB</option>
-                    <option value="8">8 GB</option>
-                    <option value="16">16 GB</option>
-                    <option value="32">32 GB</option>
-                    <option value="64">64 GB</option>
-                    <option value="128">128 GB</option>
-                    <option value="Others">Others</option>
-                </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="ramSlots">Number of RAM Slots:</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Select RAM size</option>
-                    <option value="0">0 GB</option>
-                    <option value="1">1 GB</option>
-                    <option value="2">2 GB</option>
-                    <option value="3">3 GB</option>
-                    <option value="4">4 GB</option>
-                    <option value="5">5 GB</option>
-                    <option value="Others">Others</option>
-                </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="hdmiPort">HDMI Port (Yes/No):</label>
-                            <select class="form-control" id="hdmiPort" name="hdmiPort">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                        </div>
-                        <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="displaySize">Display Size (Inch):</label>
-                            <input type="number" class="form-control" id="displaySize" name="displaySize" placeholder="Enter Display Size">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="graphicsCardSize">Graphics Card Size (GB):</label>
-     
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Select Graphic card size</option>
-                    <option value="0">0 GB</option>
-                    <option value="2">2 GB</option>
-                    <option value="4">4 GB</option>
-                    <option value="8">8 GB</option>
-                    <option value="16">16 GB</option>
-                    <option value="32">32 GB</option>
-                    <option value="64">64 GB</option>
-                    <option value="128">128 GB</option>
-                    <option value="Others">Others</option>
-                </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="graphicsCardVersion">Graphics Card Version:</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Graphic Card Version</option>
-                    <option value="Nvidia GeForce">NVidia GeForce</option>
-                    <option value="Intel Iris Xe">Intel Iris Xe</option>
-                    <option value="AMD Raedon">AMD Raedon</option>
-                    <option value="Others">Others</option>
-                </select>
-                        </div>
-                        
-                </div>
-                                </form>
-                            `;
+                <label for="{{ form.insurance_company.id }}">Insurance Company:</label>
+                {{ form.insurance_company(class="form-control insurance-field", id=form.insurance_company.id, disabled=True) }}
+            </div>
+            
+            <div class="form-group col-md-4">
+                <label for="{{ form.policy_number.id }}">Policy Number:</label>
+                {{ form.policy_number(type="text", class="form-control insurance-field", id=form.policy_number.id) }}
+            </div>
+        </div>
 
-                        } else if (deviceType === 'printer') {
-                            specificationsForm.innerHTML = `
-                               
-                                <form id='form6.2',method='post'>
-                                   
-                                    <div class="form-row">
-                                        <div class="form-group col-md-4">
-                            <label for="printerType">Printer Type:</label>
-                            <input type="text" class="form-control" id="printerType" name="printerType" placeholder="Enter Printer Type">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.start_date.id }}">Start Date:</label>
+                {{ form.start_date(class="form-control insurance-field", id=form.start_date.id) }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.end_date.id }}">End Date:</label>
+                {{ form.end_date(class="form-control insurance-field", id=form.end_date.id) }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.insured_amount.id }}">Insured Amount:</label>
+                {{ form.insured_amount(class="form-control insurance-field", id=form.insured_amount.id) }}
+            </div>
+        </div>
+    </div>
+    
+    <button type="button" class="collapsible"><strong>Purchase Details</strong></button>
+    <div class="container1">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.source_of_purchase.id }}">Source Of Purchase:</label>
+                {{ form.source_of_purchase(class="form-control", id=form.source_of_purchase.id, required="required") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.contract_id.id }}">Contract ID:</label>
+                {{ form.contract_id(class="form-control", id=form.contract_id.id, required="required") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.invoice_amount.id }}">Invoice Amount:<span style="color: red;">*</span></label>
+                {{ form.invoice_amount(class="form-control", id=form.invoice_amount.id, required="required") }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.invoice_date.id }}">Invoice Date:<span style="color: red;">*</span></label>
+                {{ form.invoice_date(class="form-control", id=form.invoice_date.id, required="required") }}
+            </div>
+            <div class="form-group col-md-4">
+                <div class="container">
+                    <!-- File Upload Form -->
+                    <form enctype="multipart/form-data" action="/upload" method="POST">
+                        <div class="form-group">
+                            <label for="invoiceFiles">Upload Invoices (PDF, JPG, PNG) - Maximum 3 files:</label>
+                            <input type="file" class="form-control-file" id="invoiceFiles" name="invoiceFiles[]" multiple accept=".pdf, .jpg, .jpeg, .png" max="3" required>
                         </div>
-                        <div class="form-group col-md-4">
-                            <label for="printingType">Printing Type:</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">printer type</option>
-                    <option value="color">color</option>
-                    <option value="Mono">Mono</option>
-                    <option value="Others">Others</option>
-                    </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="connectivity">Connectivity:</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Connectivity</option>
-                    <option value="Wifi">Wifi</option>
-                    <option value="Ethernet">Ethernet</option>
-                    <option value="Both">Both</option>
-                   </select>
-                        </div>
-                    
-                        </div>
-                        <div class="form-row">
-                        
-                        <div class="form-group col-md-4">
-                            <label for="printerToner">Printer Toner Name:</label>
-                            <input type="text" class="form-control" id="printerToner" name="printerToner" placeholder="Enter Printer Toner Name">
-                        </div>
-                </div>
+                        <button type="button" onclick="uploadFiles()">Upload</button>
                     </form>
-                            `;
-                }else if (deviceType === 'HDD Specs') {
-                            specificationsForm.innerHTML = `
-                                
-                                <form id='form6.3',method='post'>
-                            <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="hddSize">HDD Size (GB):</label>
-                            <input type="number" class="form-control" id="hddSize" name="hddSize" placeholder="Enter HDD Size">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="hddType">HDD Type:</label>
-                            <input type="text" class="form-control" id="hddType" name="hddType" placeholder="Enter HDD Type">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="Connectivity">Connectivity:</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Connectivity</option>
-                    <option value="USB">USB</option>
-                    <option value="Type C">Type C</option>
-                    <option value="Both">Both</option>
-                   </select>
-                        </div>
-                </div>
-                                </form>
-                            `;
-                        } else if (deviceType === 'tabletMobile') {
-                            specificationsForm.innerHTML = `
-                        
-                                <form id='form6.4',method='post'>
-                                    <!-- Add tablet/mobile fields here -->
                     
-                    <form>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                            <label for="os">Operating System:</label>
-                            <input type="text" class="form-control" id="os" name="os" placeholder="Enter Operating System">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="storage">Storage (ROM) GB:</label>
-                            <input type="number" class="form-control" id="storage" name="storage" placeholder="Enter Storage (ROM) GB">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="ramSize">RAM Size (GB):</label>
-                            <input type="number" class="form-control" id="ramSize" name="ramSize" placeholder="Enter RAM Size">
-                        </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                            <label for="displaySize">Display Size (Inch):</label>
-                            <input type="number" class="form-control" id="displaySize" name="displaySize" placeholder="Enter Display Size">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="stylus">Stylus (Yes/No):</label>
-                            <select class="form-control" id="stylus" name="stylus">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="connectivity">Connectivity:</label>
-                            <select class="form-control" id="check" name="check" onchange="check()">
-                    <option value="">Connectivity</option>
-                    <option value="Wifi">Wifi</option>
-                    <option value="SIM">SIM</option>
-                    <option value="Both">Both</option>
-                   </select>
-                        </div>
+                    <!-- Display Uploaded Files for Download -->
+                    <h5>Uploaded Files:</h5>
+                    <ul id="downloadList">
+                        <!-- Download links will be added dynamically here -->
+                    </ul>
+                
+                    <!-- Your existing HTML content -->
+                
                 </div>
-            
-                                </form>
-                            `;
-                        } else if (deviceType === 'monitor') {
-                            specificationsForm.innerHTML = `
-                                
-                                <form id='form6.5',method='post'>
-                                   
-                <div class="container mt-4">
-                   
-                    <form>
-                        <div class="form-row">
-                        <div class="form-group col-md-4">
-                            <label for="displaySize">Display Size (Inch):</label>
-                            <input type="number" class="form-control" id="displaySize" name="displaySize" placeholder="Enter Display Size">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="hdmiPort">HDMI Port (Yes/No):</label>
-                            <select class="form-control" id="hdmiPort" name="hdmiPort">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-4">
-                            <label for="speaker">Speaker (Yes/No):</label>
-                            <select class="form-control" id="speaker" name="speaker">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                </div>
-                                </form>
-                            `;
-                        } else if (deviceType === 'ups') {
-                            specificationsForm.innerHTML = `
-                                
-                                <form id='form6.6',method='post'>
-                                    <!-- Add UPS fields here -->
-                                <div class="form-row">      
-                              <div class="container mt-4">
-                             
-                    
-                              <div class="container mt-4">
-                            <label for="upsCapacity">UPS Capacity (Kva):</label>
-                            <input type="number" class="form-control" id="upsCapacity" name="upsCapacity" placeholder="Enter UPS Capacity (Kva)">
-                        </div>
-                        <div class="container mt-4">
-                            <label for="amc">AMC (Yes/No):</label>
-                            <select class="form-control" id="amc" name="amc">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                        </div>
-                        <div class="form-row">  
-                        <div class="container mt-4">
-                            <label for="startDate">Start Date:</label>
-                            <input type="date" class="form-control" id="startDate" name="startDate">
-                        </div>
-                        <div class="container mt-4">
-                            <label for="endDate">End Date:</label>
-                            <input type="date" class="form-control" id="endDate" name="endDate">
-                        </div>
-                </div>
-            
-            
-                                </form>
-                            `;
+            </div>
+        </div>
+    </div>
 
-                        }
-                        
-      
-        
-        
+
+    <button type="button" class="collapsible"><strong>Payment details</strong></button>
+    <div class="container1">
+        <div class="form-row">
+    
+            <div class="form-group col-md-4">
+                <label for="{{ form.payment_done.id }}">Payment Done (Yes/No):</label>
+                {{ form.payment_done(class="form-control", id=form.payment_done.id, onchange="togglePaymentFields()") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.payment_date.id }}">Payment Date:</label>
+                {{ form.payment_date(class="form-control payment-field", id=form.payment_date.id, disabled="disabled") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.voucher_number.id }}">FMS Invoice Number:</label>
+                {{ form.voucher_number(class="form-control payment-field", id=form.voucher_number.id, disabled="disabled") }}
+            </div>
+            <script>
+                function togglePaymentFields() {
+                    var paymentDoneSelect = document.getElementById("payment_done");
+                    var paymentDateInput = document.getElementById("payment_date");
+                    var voucherNumberInput = document.getElementById("voucher_number");
+                
+                    if (paymentDoneSelect.value === "Yes") {
+                        paymentDateInput.disabled = false;
+                        voucherNumberInput.disabled = false;
+                    } else {
+                        paymentDateInput.disabled = true;
+                        voucherNumberInput.disabled = true;
                     }
-                    function submitAllForms() {
-            document.getElementById("form6.1").submit();
-            document.getElementById("form6.2").submit();
-            document.getElementById("form6.3").submit();
-            document.getElementById("form6.4").submit();
-            document.getElementById("form6.5").submit();
-            document.getElementById("form6.6").submit();}
-
-           
-
-            function uploadFiles() {
-            const filesInput = document.getElementById('invoiceFiles');
-            const fileList = filesInput.files;
-
-            // Display uploaded files
-            const downloadList = document.getElementById('downloadList');
-            for (let i = 0; i < fileList.length; i++) {
-                const file = fileList[i];
-                const blobUrl = URL.createObjectURL(file);
-                const downloadLink = document.createElement('a');
-                downloadLink.href = blobUrl;
-                downloadLink.download = file.name;
-                downloadLink.textContent = file.name;
-                downloadLink.style.display = 'block';
-                downloadList.appendChild(downloadLink);
-            }
-
-            // Limit displayed download links to 3
-            while (downloadList.children.length > 3) {
-                downloadList.removeChild(downloadList.firstChild);
-            }
-        }
-                </script>
-                
-                <!-- Submit button -->
-                <div class="text-center mt-4">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
+                }
+            </script>
         </div>
-    </form>
- </div>
+    </div>
+
+
+    <button type="button" class="collapsible"><strong>Supplier Details</strong></button>
+    <div class="container1">
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.supplier_name.id }}">Supplier Name:<span style="color: red;">*</span></label>
+                {{ form.supplier_name(class="form-control", id=form.supplier_name.id) }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.supplier_contact.id }}">Supplier Contact:<span style="color: red;">*</span></label>
+                {{ form.supplier_contact(class="form-control", id=form.supplier_contact.id) }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.supplier_email.id }}">Supplier Email:</label>
+                {{ form.supplier_email(class="form-control", id=form.supplier_email.id) }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.supplier_location.id }}">Supplier Location Delhi (Yes/No):</label>
+                {{ form.supplier_location(class="form-control", id=form.supplier_location.id) }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.incident_id.id }}">Incident ID:</label>
+                {{ form.incident_id(class="form-control", id=form.incident_id.id) }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.remarks.id }}">Remarks:</label>
+                {{ form.remarks(class="form-control", id=form.remarks.id) }}
+            </div>
+        </div>
+    </div>
+
     
-    
+    <button type="button" class="collapsible"><strong>Device specifications</strong></button>
+    <div class="container1">
+        <div class="form-group">
+            <label for="{{ form.device_type.id }}">Device Type:</label>
+            {{ form.device_type(class="form-control", id=form.device_type.id, onchange="showDeviceSpecifications()") }}
+        </div>
+        <div id="specificationsForm">
+            <!-- Device Specifications Form Will Appear Here -->
+        </div>
+    </div>
+
+
+    <div class="text-center mt-4">
+        {{ form.submit(class="btn btn-primary") }}
+    </div>
+
+
     
     <script>
-        function togglePaymentFields() {
-            const paymentDone = document.getElementById('paymentDone');
-            const paymentFields = document.querySelectorAll('.payment-field');
-            
-            if (paymentDone.value === 'No') {
-                paymentFields.forEach(field => {
-                    field.disabled = true;
-                });
-            } else {
-                paymentFields.forEach(field => {
-                    field.disabled = false;
-                });
-            }
-        }
-    </script>
+        function showDeviceSpecifications() {
+            const deviceType = document.getElementById('device_type').value;
+            const specificationsForm = document.getElementById('specificationsForm');
 
+            specificationsForm.innerHTML = ''; // Clear previous content
+                
+                            if (deviceType === 'laptopDesktop') {
+                                specificationsForm.innerHTML = `
+                                    
+    <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_os.id }}">Operating System:</label>
+                {{ form.desk_lap_os(class="form-control", id=form.desk_lap_os.id, placeholder="Enter Operating System") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_hdd_type.id }}">HDD Type:</label>
+                {{ form.desk_lap_hdd_type(class="form-control", id=form.desk_lap_hdd_type.id, onchange="check()") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_hdd_size.id }}">HDD Size (GB):</label>
+                {{ form.desk_lap_hdd_size(class="form-control", id=form.desk_lap_hdd_size.id, onchange="check()") }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_ram_type.id }}">RAM Type:</label>
+                {{ form.desk_lap_ram_type(class="form-control", id=form.desk_lap_ram_type.id, onchange="check()") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_ram_size.id }}">RAM Size:</label>
+                {{ form.desk_lap_ram_size(class="form-control", id=form.desk_lap_ram_size.id, onchange="check()") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_ram_frequency.id }}">RAM Frequency (MHz):</label>
+                {{ form.desk_lap_ram_frequency(class="form-control", id=form.desk_lap_ram_frequency.id, onchange="check()") }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_ram_expandable.id }}">RAM Expandable Upto (GB):</label>
+                {{ form.desk_lap_ram_expandable(class="form-control", id=form.desk_lap_ram_expandable.id, onchange="check()") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_ram_slots.id }}">Number of RAM Slots:</label>
+                {{ form.desk_lap_ram_slots(class="form-control", id=form.desk_lap_ram_slots.id, onchange="check()") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_hdmi_port.id }}">HDMI Port (Yes/No):</label>
+                {{ form.desk_lap_hdmi_port(class="form-control", id=form.desk_lap_hdmi_port.id) }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_display_size.id }}">Display Size (Inch):</label>
+                {{ form.desk_lap_display_size(class="form-control", id=form.desk_lap_display_size.id, placeholder="Enter Display Size") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_graphics_card_size.id }}">Graphics Card Size (GB):</label>
+                {{ form.desk_lap_graphics_card_size(class="form-control", id=form.desk_lap_graphics_card_size.id, onchange="check()") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.desk_lap_graphics_card_version.id }}">Graphics Card Version:</label>
+                {{ form.desk_lap_graphics_card_version(class="form-control", id=form.desk_lap_graphics_card_version.id, onchange="check()") }}
+            </div>
+    </div>
 
-    <!-- Link to Bootstrap JS and jQuery (optional for some Bootstrap features) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        
-       
-        function checkLocation() {
-            const locationDropdown = document.getElementById('location');
-            const otherLocationContainer = document.getElementById('otherLocationContainer');
-            const otherLocationInput = document.getElementById('otherLocation');
-            
-            if (locationDropdown.value === 'Others') {
-                otherLocationContainer.style.display = 'block';
-                otherLocationInput.setAttribute('required', 'required');
-            } else {
-                otherLocationContainer.style.display = 'none';
-                otherLocationInput.removeAttribute('required');
-            }
-        }
-        function checkCompany() {
-            const CompanyDropdown = document.getElementById('Company');
-            const otherCompanyContainer = document.getElementById('otherCompanyContainer');
-            const otherCompanyInput = document.getElementById('otherCompany');
-            
-            if (CompanyDropdown.value === 'Others') {
-                otherCompanyContainer.style.display = 'block';
-                otherCompanyInput.setAttribute('required', 'required');
-            } else {
-                otherComapnyContainer.style.display = 'none';
-                otherCompanyInput.removeAttribute('required');
-            }
-        }
-        function check() {
-            const Dropdown = document.getElementById('Check');
-            const Container = document.getElementById('Container');
-            const Input = document.getElementById('textBox');
-            
-            if (Dropdown.value === 'Others') {
-                Container.style.display = 'block';
-                Input.setAttribute('required', 'required');
-            } else {
-                Container.style.display = 'none';
-                Input.removeAttribute('required');
-            }
-        }
-        
-       
-        
-    </script>
-    <script>
-        // Generate options from 0 to 60 using JavaScript
-        const numberSelect = document.getElementById('numberSelect');
-        for (let i = 0; i <= 60; i++) {
-            const option = document.createElement('option');
-            option.value = i;
-            option.textContent = i;
-            numberSelect.appendChild(option);
-        }
-    </script>
-    <script>
-        function toggleInsuranceFields() {
-            const insuranceCoverage = document.getElementById('insuranceCoverage');
-            const insuranceFields = document.querySelectorAll('.insurance-field');
-            
-            if (insuranceCoverage.value === 'No') {
-                insuranceFields.forEach(field => {
-                    field.disabled = true;
-                });
-            } else {
-                insuranceFields.forEach(field => {
-                    field.disabled = false;
-                });
-            }
-        }
-        function submitAllForms() {
-            document.getElementById("form1").submit();
-            document.getElementById("form2").submit();
-            document.getElementById("form3").submit();
-            document.getElementById("form4").submit();
-            document.getElementById("form5").submit();}
-
-
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
-}
-            
-    </script>
+                                    
+                                `;
     
+                            } else if (deviceType === 'printer') {
+                                specificationsForm.innerHTML = `
+                                   
+                                
+                                       
+                                        <div class="form-row">
+                                            <div class="form-group col-md-4">
+                                <label for="printerType">Printer Type:</label>
+                                <input type="text" class="form-control" id="printerType" name="printerType" placeholder="Enter Printer Type">
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="printingType">Printing Type:</label>
+                                <select class="form-control" id="check" name="check" onchange="check()">
+                        <option value="">printer type</option>
+                        <option value="color">color</option>
+                        <option value="Mono">Mono</option>
+                        <option value="Others">Others</option>
+                        </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="connectivity">Connectivity:</label>
+                                <select class="form-control" id="check" name="check" onchange="check()">
+                        <option value="">Connectivity</option>
+                        <option value="Wifi">Wifi</option>
+                        <option value="Ethernet">Ethernet</option>
+                        <option value="Both">Both</option>
+                       </select>
+                            </div>
+                        
+                            </div>
+                            <div class="form-row">
+                            
+                            <div class="form-group col-md-4">
+                                <label for="printerToner">Printer Toner Name:</label>
+                                <input type="text" class="form-control" id="printerToner" name="printerToner" placeholder="Enter Printer Toner Name">
+                            </div>
+                    </div>
+                        
+                                `;
+                    }else if (deviceType === 'HDD Specs') {
+                                specificationsForm.innerHTML = `
+                                    
+                                
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.hdd_size.id }}">HDD Size (GB):</label>
+                {{ form.hdd_size(class="form-control", id=form.hdd_size.id, placeholder="Enter HDD Size") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.hdd_type.id }}">HDD Type:</label>
+                {{ form.hdd_type(class="form-control", id=form.hdd_type.id, placeholder="Enter HDD Type") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.connectivity.id }}">Connectivity:</label>
+                {{ form.connectivity(class="form-control", id=form.connectivity.id, onchange="check()") }}
+            </div>
+        </div>
+
+                                    
+                                `;
+                            } else if (deviceType === 'tabletMobile') {
+                                specificationsForm.innerHTML = `
+                            
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="{{ form.os.id }}">Operating System:</label>
+            {{ form.os(class="form-control", id=form.os.id, placeholder="Enter Operating System") }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="{{ form.storage.id }}">Storage (ROM) GB:</label>
+            {{ form.storage(class="form-control", id=form.storage.id, placeholder="Enter Storage (ROM) GB") }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="{{ form.ram_size.id }}">RAM Size (GB):</label>
+            {{ form.ram_size(class="form-control", id=form.ram_size.id, placeholder="Enter RAM Size") }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label for="{{ form.display_size.id }}">Display Size (Inch):</label>
+            {{ form.display_size(class="form-control", id=form.display_size.id, placeholder="Enter Display Size") }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="{{ form.stylus.id }}">Stylus (Yes/No):</label>
+            {{ form.stylus(class="form-control", id=form.stylus.id) }}
+        </div>
+        <div class="form-group col-md-4">
+            <label for="{{ form.connectivity.id }}">Connectivity:</label>
+            {{ form.connectivity(class="form-control", id=form.connectivity.id, onchange="check()") }}
+        </div>
+    </div>
+
+                
+                                    
+                                `;
+                            } else if (deviceType === 'monitor') {
+                                specificationsForm.innerHTML = `
+                                    
+                                
+                                       
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="{{ form.display_size.id }}">Display Size (Inch):</label>
+                {{ form.display_size(class="form-control", id=form.display_size.id, placeholder="Enter Display Size") }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.hdmi_port.id }}">HDMI Port (Yes/No):</label>
+                {{ form.hdmi_port(class="form-control", id=form.hdmi_port.id) }}
+            </div>
+            <div class="form-group col-md-4">
+                <label for="{{ form.speaker.id }}">Speaker (Yes/No):</label>
+                {{ form.speaker(class="form-control", id=form.speaker.id) }}
+            </div>
+        </div>
+                                    
+                                `;
+                            } else if (deviceType === 'ups') {
+                                specificationsForm.innerHTML = `
+                                    
+                        
+                                        <!-- Add UPS fields here -->
+    <div class="form-row">
+        <div class="container mt-4">
+            <label for="{{ form.ups_capacity.id }}">UPS Capacity (Kva):</label>
+            {{ form.ups_capacity(class="form-control", id=form.ups_capacity.id, placeholder="Enter UPS Capacity (Kva)") }}
+        </div>
+        <div class="container mt-4">
+            <label for="{{ form.amc.id }}">AMC (Yes/No):</label>
+            {{ form.amc(class="form-control", id=form.amc.id) }}
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="container mt-4">
+            <label for="{{ form.start_date.id }}">Start Date:</label>
+            {{ form.start_date(class="form-control", id=form.start_date.id) }}
+        </div>
+        <div class="container mt-4">
+            <label for="{{ form.end_date.id }}">End Date:</label>
+            {{ form.end_date(class="form-control", id=form.end_date.id) }}
+        </div>
+    </div>
+                                
+                                `;
+    
+                            }
+                            
+                        }
+    
+            function checkLocation() {
+                const locationDropdown = document.getElementById('location');
+                const otherLocationContainer = document.getElementById('otherLocationContainer');
+                const otherLocationInput = document.getElementById('otherLocation');
+                
+                if (locationDropdown.value === 'Others') {
+                    otherLocationContainer.style.display = 'block';
+                    otherLocationInput.setAttribute('required', 'required');
+                } else {
+                    otherLocationContainer.style.display = 'none';
+                    otherLocationInput.removeAttribute('required');
+                }
+            }
+            function checkCompany() {
+                const CompanyDropdown = document.getElementById('Company');
+                const otherCompanyContainer = document.getElementById('otherCompanyContainer');
+                const otherCompanyInput = document.getElementById('otherCompany');
+                
+                if (CompanyDropdown.value === 'Others') {
+                    otherCompanyContainer.style.display = 'block';
+                    otherCompanyInput.setAttribute('required', 'required');
+                } else {
+                    otherComapnyContainer.style.display = 'none';
+                    otherCompanyInput.removeAttribute('required');
+                }
+            }
+    
+            function uploadFiles() {
+                const filesInput = document.getElementById('invoiceFiles');
+                const fileList = filesInput.files;
+    
+                // Display uploaded files
+                const downloadList = document.getElementById('downloadList');
+                for (let i = 0; i < fileList.length; i++) {
+                    const file = fileList[i];
+                    const blobUrl = URL.createObjectURL(file);
+                    const downloadLink = document.createElement('a');
+                    downloadLink.href = blobUrl;
+                    downloadLink.download = file.name;
+                    downloadLink.textContent = file.name;
+                    downloadLink.style.display = 'block';
+                    downloadList.appendChild(downloadLink);
+                }
+    
+                // Limit displayed download links to 3
+                while (downloadList.children.length > 3) {
+                    downloadList.removeChild(downloadList.firstChild);
+                }
+            }
+    
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+    
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            }
+    </script>
+</form>
+
 {% endblock %}

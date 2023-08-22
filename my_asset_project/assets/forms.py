@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import FileField, SubmitField, StringField, IntegerField
-from wtforms.validators import DataRequired
+from wtforms import FileField, SubmitField, StringField, IntegerField, SelectField, DateField, TextAreaField
+from wtforms.validators import DataRequired, InputRequired, Email
 
 
 class BulkUploadForm(FlaskForm):
@@ -9,71 +9,169 @@ class BulkUploadForm(FlaskForm):
 
 
 class AddNewAssetForm(FlaskForm):
-    user_emp_id = StringField('emp_id')
     asset_number = StringField('asset_number', validators=[DataRequired()])
-    product_category = StringField('product_category', validators=[DataRequired()])
+    product_category = SelectField("Product Category", choices=[
+        ("", "Select an option"),
+        ("Desktop", "Desktop"),
+        ("Laptop", "Laptop"),
+        ("Monitor", "Monitor"),
+        ("Server", "Server"),
+        ("UPS", "UPS"),
+        ("Storage", "Storage"),
+        ("Tablet", "Tablet"),
+        ("Mobile", "Mobile"),
+    ])
+    system_host_name = StringField("System Host Name")
     product_name = StringField('product_name', validators=[DataRequired()])
     model_version = StringField('model_version', validators=[DataRequired()])
-    manufacturer = StringField('manufacturer', validators=[DataRequired()])
-    asset_status = StringField('asset_status')
-    asset_category = StringField('asset_category')
+    manufacturer = SelectField("Manufacturer", choices=[
+        ("", "Select a manufacturer"),
+        ("DELL", "DELL"),
+        ("LENOVO", "LENOVO"),
+        ("HP", "HP"),
+        ("SAMSUNG", "SAMSUNG"),
+        ("TOSHIBA", "TOSHIBA"),
+        ("ASUS", "ASUS"),
+        ("ACER", "ACER"),
+        ("APPLE", "APPLE"),
+        ("XIAOMI", "XIAOMI"),
+        ("ONEPLUS", "ONEPLUS"),
+        ("SEAGATE", "SEAGATE"),
+        ("WD", "WD"),
+        ("LG", "LG"),
+        ("IBM", "IBM"),
+        ("PANASONIC", "PANASONIC"),
+        ("NOKIA", "NOKIA"),
+        ("PHILLIPS", "PHILLIPS"),
+        ("EPSON", "EPSON"),
+        ("BENQ", "BENQ"),
+        ("EWITT", "EWITT"),
+        ("GOOGLE", "GOOGLE"),
+        ("INTEL", "INTEL"),
+        ("HCL", "HCL"),
+        ("VAIO", "VAIO"),
+        ("AVITA", "AVITA"),
+        ("MSI", "MSI"),
+        ("HITACHI", "HITACHI"),
+        ("SONY", "SONY"),
+        ("ZEBRONICS", "ZEBRONICS"),
+        ("IBALL", "IBALL"),
+        ("AOC", "AOC"),
+        ("Others", "Others"),
+    ])
+    other_brand = StringField("other_brand")
+    asset_status = SelectField("Asset Status", choices=[
+        ("", "Select an option"),
+        ("In Stock", "In Stock"),
+        ("Assigned", "Assigned")
+    ])
+    user_name = StringField("user_name")
+    employee_id = StringField('employee_id', validators=[DataRequired()])
+    location = SelectField("location", choices=[
+        ("", "Select an location"),
+        ("Residence", "Residence"),
+        ("Ministry", "Ministry"),
+        ("office", "office"),
+        ("others", "others")
+    ])
+    other_location = StringField("other_location")
+    email = StringField("email", validators=[Email()])
+    contact = StringField("contact", validators=[InputRequired()])
+    company = SelectField("company", choices=[
+        ("", "Select a Company"),
+        ("AIC", "AIC"),
+        ("WIPRO", "WIPRO"),
+        ("BHARAT IT", "BHARAT IT"),
+        ("INTELLECT", "INTELLECT"),
+        ("PROGILITY", "PROGILITY"),
+        ("OTHERS", "OTHERS")
+    ])
+    other_company = StringField("other_company")
+    asset_category = SelectField("Asset Category", choices=[
+        ("", "Select asset category"),
+        ("High", "High"),
+        ("Medium", "Medium"),
+        ("Low", "Low"),
+    ])
     oem_serial_number = StringField('oem_serial_number', validators=[DataRequired()])
-    system_host_name = StringField('system_host_name')
     ip_address = StringField('ip_address')
-    oem_asset_warranty = StringField('oem_asset_warranty')
-    oem_warranty_expiry_date = StringField('oem_warranty_expiry_date')
-    insurance_coverage = StringField('insurance_coverage')
-    insurance_company = StringField('insurance_company')
-    policy_number = StringField('policy_number')
-    insured_amount = IntegerField('insured_amount')
-    start_date = StringField('start_date')
-    end_date = StringField('end_date')
-    supplier_name = StringField('supplier_name')
-    supplier_contact = StringField('supplier_contact')
-    supplier_location = StringField('supplier_location')
-    supplier_email = StringField('supplier_email')
-    incident_id = StringField('incident_id')
-    remarks = StringField('remarks')
-    payment_done = StringField('payment_done')
-    payment_date = StringField('payment_date')
-    voucher_number = StringField('voucher_number')
+    oem_asset_warranty = SelectField("OEM asset Warranty(months)", choices=[
+        ("", "Select a number"),
+        *[(str(month), f"{month} months") for month in range(0, 61)],
+    ])
+    oem_warranty_expiry_date = DateField("OEM Warranty Expiry date")
+    insurance_coverage = SelectField("Insurance Coverage", choices=[
+        ("", "Select coverage"),
+        ("Yes", "Yes"),
+        ("No", "No"),
+    ])
+    insurance_company = SelectField("Insurance Company:", choices=[("", "Select company"), ("UIIC", "UIIC"), ("NICIL", "NICIL"), ("NIACL", "NIACL"), ("OICL", "OICL")], validators=[InputRequired()])
+    policy_number = StringField("Policy Number", render_kw={"disabled": "true"})
+    start_date = DateField("Start Date", render_kw={"disabled": "true"})
+    end_date = DateField("End Date", render_kw={"disabled": "true"})
+    insured_amount = StringField("Insured Amount", render_kw={"disabled": "true"})
+    source_of_purchase = StringField("Source Of Purchase")
+    contract_id = StringField("Contract ID")
+    invoice_amount = StringField("Invoice Amount", validators=[DataRequired()])
+    invoice_date = DateField("Invoice Date", validators=[InputRequired()])
+    invoice_upload = StringField('invoice_upload')
+    supplier_name = StringField("Supplier Name:", validators=[InputRequired()])
+    supplier_contact = StringField("Supplier Contact:", validators=[InputRequired()])
+    supplier_email = StringField("Supplier Email:", validators=[Email()])
+    supplier_location = SelectField("Supplier Location Delhi (Yes/No):", choices=[("", "Select location status"), ("Yes", "Yes"), ("No", "No")])
+    incident_id = StringField("Incident ID:")
+    remarks = TextAreaField("Remarks:")
+    payment_done = SelectField("Payment Done (Yes/No):", choices=[("", "Select payment status"), ("Yes", "Yes"), ("No", "No")])
+    payment_date = StringField("Payment Date", render_kw={"class": "form-control payment-field", "disabled": "disabled"})
+    voucher_number = StringField("FMS Invoice Number", render_kw={"class": "form-control payment-field", "disabled": "disabled"})
     disposal_date = StringField('disposal_date')
     disposal_amount = IntegerField('disposal_amount')
-    desk_lap_operating_system = StringField('desk_lap_operating_system')
-    desk_lap_hdd_type = StringField('desk_lap_hdd_type')
-    desk_lap_hdd_size = IntegerField('desk_lap_hdd_size')
-    desk_lap_ram_type = StringField('desk_lap_ram_type')
-    desk_lap_ram_size = IntegerField('desk_lap_ram_size')
-    desk_lap_ram_frequency = IntegerField('desk_lap_ram_frequency')
-    desk_lap_ram_expandable_upto = IntegerField('desk_lap_ram_expandable_upto')
-    desk_lap_no_of_ram_slots =  IntegerField('desk_lap_no_of_ram_slots')
-    desk_lap_hdmi_port = StringField('desk_lap_hdmi_port')
-    desk_lap_display_size = IntegerField('desk_lap_display_size')
-    desk_lap_graphics_card_size = IntegerField('desk_lap_graphics_card_size')
-    desk_lap_graphics_card_version = StringField('desk_lap_graphics_card_version')
+    device_type = SelectField("Device Type", choices=[
+        ("", "Select a device type"),
+        ("laptopDesktop", "Laptop/Desktop"),
+        ("printer", "Printer"),
+        ("HDD Specs", "HDD Specs"),
+        ("tabletMobile", "Tablet/Mobile"),
+        ("monitor", "Monitor"),
+        ("ups", "UPS")
+    ], validators=[InputRequired()])
+    # Desktop/Laptop
+    desk_lap_os = StringField("desk_lap_os")
+    desk_lap_hdd_type = SelectField("desk_lap_hdd_type", choices=[("", "Select HDD type"), ("SATA", "SATA"), ("SSD", "SSD"), ("SAS", "SAS"), ("Others", "Others")])
+    desk_lap_hdd_size = SelectField("desk_lap_hdd_size", choices=[("", "Select HDD size"), ("128", "128"), ("256", "256"), ("512", "512"), ("1024", "1024"), ("2048", "2048"), ("4096", "4096"), ("Others", "Others")])
+    desk_lap_ram_type = SelectField("desk_lap_ram_type", choices=[("", "Select RAM type"), ("DDR", "DDR"), ("DDR2", "DDR2"), ("DDR3", "DDR3"), ("DDR4", "DDR4"), ("Others", "Others")])
+    desk_lap_ram_size = SelectField("desk_lap_ram_size", choices=[("", "Select RAM size"), ("0", "0 GB"), ("2", "2 GB"), ("4", "4 GB"), ("8", "8 GB"), ("16", "16 GB"), ("32", "32 GB"), ("64", "64 GB"), ("128", "128 GB"), ("Others", "Others")])
+    desk_lap_ram_frequency = SelectField("desk_lap_ram_frequency", choices=[("", "Select RAM frequency"), ("3000", "3000 MHz"), ("3200", "3200 MHz"), ("3600", "3600 MHz"), ("4000", "4000 MHz"), ("4200", "4200 MHz"), ("4400", "4400 MHz"), ("2933", "2933 MHz"), ("2666", "2666 MHz"), ("2133", "2133 MHz"), ("1600", "1600 MHz"), ("1333", "1333 MHz"), ("1066", "1066 MHz"), ("800", "800 MHz"), ("1000", "1000 MHz"), ("667", "667 MHz"), ("533", "533 MHz"), ("400", "400 MHz"), ("200", "200 MHz"), ("266", "266 MHz"), ("300", "300 MHz"), ("333", "333 MHz"), ("Others", "Others")])
+    desk_lap_ram_expandable = SelectField("desk_lap_ram_expandable", choices=[("", "RAM Expandable Upto"), ("0", "0 GB"), ("2", "2 GB"), ("4", "4 GB"), ("8", "8 GB"), ("16", "16 GB"), ("32", "32 GB"), ("64", "64 GB"), ("128", "128 GB"), ("Others", "Others")])
+    desk_lap_ram_slots = SelectField("desk_lap_ram_slots", choices=[("", "Select RAM size"), ("0", "0 GB"), ("1", "1 GB"), ("2", "2 GB"), ("3", "3 GB"), ("4", "4 GB"), ("5", "5 GB"), ("Others", "Others")])
+    desk_lap_hdmi_port = SelectField("desk_lap_hdmi_port", choices=[("Yes", "Yes"), ("No", "No")])
+    desk_lap_display_size = IntegerField("desk_lap_display_size")
+    desk_lap_graphics_card_size = SelectField("desk_lap_graphics_card_size", choices=[("", "Select Graphic card size"), ("0", "0 GB"), ("2", "2 GB"), ("4", "4 GB"), ("8", "8 GB"), ("16", "16 GB"), ("32", "32 GB"), ("64", "64 GB"), ("128", "128 GB"), ("Others", "Others")])
+    desk_lap_graphics_card_version = SelectField("desk_lap_graphics_card_version", choices=[("", "Graphic Card Version"), ("Nvidia GeForce", "NVidia GeForce"), ("Intel Iris Xe", "Intel Iris Xe"), ("AMD Raedon", "AMD Raedon"), ("Others", "Others")])
+    # Printer
     printer_type = StringField('printer_type')
     printing_type = StringField('printing_type')
     printer_toner_name = StringField('printer_toner_name')
     printer_connectivity = StringField('printer_connectivity')
-    hdd_size = IntegerField('hdd_size')
-    hdd_type = StringField('hdd_type')
-    hdd_connectivity = StringField('hdd_connectivity')
-    tab_os = StringField('tab_os')
-    tab_storage =  IntegerField('tab_storage')
-    tab_ram_size =  IntegerField('tab_ram_size')
-    tab_display_size = IntegerField('tab_display_size')
-    tab_stylus = StringField('tab_stylus')
-    tab_connectivity = StringField('tab_connectivity')
-    monitor_display_size = IntegerField('monitor_display_size')
-    monitor_hdmi_port = StringField('monitor_hdmi_port')
-    monitor_speaker = StringField('monitor_speaker')
-    ups_capacity = StringField('ups_capacity')
-    ups_amc = StringField('ups_amc')
-    ups_start_date = StringField('ups_start_date')
-    ups_end_date = StringField('ups_end_date')
-    source_of_purchase = StringField('source_of_purchase', validators=[DataRequired()])
-    contract_id = StringField('contract_id', validators=[DataRequired()])
-    invoice_amount = IntegerField('invoice_amount', validators=[DataRequired()])
-    invoice_date = StringField('invoice_date', validators=[DataRequired()])
-    invoice_upload = StringField('invoice_upload', validators=[DataRequired()])
-    submit = SubmitField('Submit')
+    # HDD
+    hdd_size = IntegerField("HDD Size (GB):")
+    hdd_type = StringField("HDD Type:")
+    connectivity = SelectField("Connectivity:", choices=[("", "Connectivity"), ("USB", "USB"), ("Type C", "Type C"), ("Both", "Both")])
+    # Tablet
+    tab_os = StringField("tab_os")
+    tab_storage = IntegerField("tab_storage")
+    tab_ram_size = IntegerField("tab_ram_size")
+    tab_display_size = IntegerField("tab_display_size")
+    tab_stylus = SelectField("tab_stylus", choices=[("Yes", "Yes"), ("No", "No")])
+    tab_connectivity = SelectField("tab_connectivity:", choices=[("", "Connectivity"), ("Wifi", "Wifi"), ("SIM", "SIM"), ("Both", "Both")])
+    # Monitor
+    display_size = IntegerField("Display Size (Inch):")
+    hdmi_port = SelectField("HDMI Port (Yes/No):", choices=[("Yes", "Yes"), ("No", "No")])
+    speaker = SelectField("Speaker (Yes/No):", choices=[("Yes", "Yes"), ("No", "No")])
+    # UPS
+    ups_capacity = IntegerField("ups_capacity")
+    amc = SelectField("amc", choices=[("Yes", "Yes"), ("No", "No")])
+    ups_start_date = DateField("ups_start_date")
+    ups_end_date = DateField("ups_end_date")
+
+    submit = SubmitField("Submit")
