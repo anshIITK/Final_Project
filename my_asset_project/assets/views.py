@@ -47,7 +47,9 @@ def add_asset():
         new_asset = Asset_Details(asset_number= form.asset_number.data, product_category= form.product_category.data, 
                                   product_name = form.product_name.data, 
                                   model_version= form.model_version.data, manufacturer = form.manufacturer.data, 
-                                  asset_status = form.asset_status.data, asset_category= form.asset_category.data, 
+                                  asset_status = form.asset_status.data, user_name=form.user_name.data, employee_id= form.employee_id.data, location=form.location.data,
+                                  other_location=form.other_location.data, email=form.email.data, contact=form.contact.data, company=form.company.data, 
+                                  other_company=form.other_company.data, asset_category= form.asset_category.data, 
                                   oem_serial_number = form.oem_serial_number.data, system_host_name = form.system_host_name.data, 
                                   ip_address = form.ip_address.data, 
                                   oem_asset_warranty = form.oem_asset_warranty.data, oem_warranty_expiry_date = form.oem_warranty_expiry_date.data, 
@@ -60,20 +62,21 @@ def add_asset():
                                   incident_id = form.incident_id.data, remarks = form.remarks.data, payment_done= form.payment_done.data, 
                                   payment_date = form.payment_date.data, 
                                   voucher_number = form.voucher_number.data, disposal_date = form.disposal_date.data, disposal_amount = form.disposal_amount.data, device_type = form.device_type.data, 
-                                  desk_lap_operating_system = form.desk_lap_operating_system.data, desk_lap_hdd_type = form.desk_lap_hdd_type.data, 
+                                  desk_lap_os = form.desk_lap_os.data, desk_lap_hdd_type = form.desk_lap_hdd_type.data, 
                                   desk_lap_hdd_size = form.desk_lap_hdd_size.data, desk_lap_ram_type = form.desk_lap_ram_type.data, desk_lap_ram_size = form.desk_lap_ram_size.data, 
-                                  desk_lap_ram_frequency = form.desk_lap_ram_frequency.data, desk_lap_ram_expandable_upto = form.desk_lap_ram_expandable_upto.data, 
-                                  desk_lap_no_of_ram_slots = form.desk_lap_no_of_ram_slots.data, desk_lap_hdmi_port = form.desk_lap_hdmi_port.data, 
+                                  desk_lap_ram_frequency = form.desk_lap_ram_frequency.data, desk_lap_ram_expandable = form.desk_lap_ram_expandable.data, 
+                                  desk_lap_ram_slots = form.desk_lap_ram_slots.data, desk_lap_hdmi_port = form.desk_lap_hdmi_port.data, 
                                   desk_lap_display_size = form.desk_lap_display_size.data, desk_lap_graphics_card_size = form.desk_lap_graphics_card_size.data, 
                                   desk_lap_graphics_card_version = form.desk_lap_graphics_card_version.data, printer_type = form.printer_type.data, printing_type= form.printing_type.data, 
-                                  printer_toner_name= form.printer_toner_name.data, printer_connectivity= form.printer_connectivity.data, hdd_size= form.hdd_size.data, 
-                                  hdd_type= form.hdd_type.data, hdd_connectivity= form.hdd_connectivity.data, tab_os= form.tab_os.data, tab_storage= form.tab_storage.data, 
+                                  printer_toner= form.printer_toner.data, printer_connectivity= form.printer_connectivity.data, hdd_size= form.hdd_size.data, 
+                                  hdd_type= form.hdd_type.data, connectivity= form.connectivity.data, tab_os= form.tab_os.data, tab_storage= form.tab_storage.data, 
                                   tab_ram_size= form.tab_ram_size.data, tab_display_size= form.tab_display_size.data, tab_stylus= form.tab_stylus.data, 
-                                  tab_connectivity= form.tab_connectivity.data, monitor_display_size= form.monitor_display_size.data, monitor_hdmi_port= form.monitor_hdmi_port.data, 
-                                  monitor_speaker= form.monitor_speaker.data, ups_capacity= form.ups_capacity.data, ups_amc= form.ups_amc.data, ups_start_date= form.ups_start_date.data, 
+                                  tab_connectivity= form.tab_connectivity.data, display_size= form.display_size.data, hdmi_port= form.hdmi_port.data, 
+                                  speaker= form.speaker.data, ups_capacity= form.ups_capacity.data, amc= form.amc.data, ups_start_date= form.ups_start_date.data, 
                                   ups_end_date= form.ups_end_date.data, source_of_purchase= form.source_of_purchase.data, contract_id= form.contract_id.data, 
                                   invoice_amount= form.invoice_amount.data, invoice_date= form.invoice_date.data, invoice_upload= form.invoice_upload.data)
-        
+        # db.drop_all()
+        # db.create_all()
         db.session.add(new_asset)
         db.session.commit()
 

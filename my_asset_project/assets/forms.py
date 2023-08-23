@@ -149,14 +149,14 @@ class AddNewAssetForm(FlaskForm):
     desk_lap_graphics_card_size = SelectField("desk_lap_graphics_card_size", choices=[("", "Select Graphic card size"), ("0", "0 GB"), ("2", "2 GB"), ("4", "4 GB"), ("8", "8 GB"), ("16", "16 GB"), ("32", "32 GB"), ("64", "64 GB"), ("128", "128 GB"), ("Others", "Others")])
     desk_lap_graphics_card_version = SelectField("desk_lap_graphics_card_version", choices=[("", "Graphic Card Version"), ("Nvidia GeForce", "NVidia GeForce"), ("Intel Iris Xe", "Intel Iris Xe"), ("AMD Raedon", "AMD Raedon"), ("Others", "Others")])
     # Printer
-    printer_type = StringField('printer_type')
-    printing_type = StringField('printing_type')
-    printer_toner_name = StringField('printer_toner_name')
-    printer_connectivity = StringField('printer_connectivity')
+    printer_type = StringField("printer_type")
+    printing_type = SelectField("printing_type", choices=[("", "printer type"), ("color", "color"), ("Mono", "Mono"), ("Others", "Others")])
+    printer_connectivity = SelectField("printer_connectivity", choices=[("", "Connectivity"), ("Wifi", "Wifi"), ("Ethernet", "Ethernet"), ("Both", "Both")])
+    printer_toner = StringField("printer_toner")
     # HDD
-    hdd_size = IntegerField("HDD Size (GB):")
-    hdd_type = StringField("HDD Type:")
-    connectivity = SelectField("Connectivity:", choices=[("", "Connectivity"), ("USB", "USB"), ("Type C", "Type C"), ("Both", "Both")])
+    hdd_size = IntegerField("hdd_size")
+    hdd_type = StringField("hdd_type")
+    connectivity = SelectField("connectivity", choices=[("", "Connectivity"), ("USB", "USB"), ("Type C", "Type C"), ("Both", "Both")])
     # Tablet
     tab_os = StringField("tab_os")
     tab_storage = IntegerField("tab_storage")
@@ -165,13 +165,13 @@ class AddNewAssetForm(FlaskForm):
     tab_stylus = SelectField("tab_stylus", choices=[("Yes", "Yes"), ("No", "No")])
     tab_connectivity = SelectField("tab_connectivity:", choices=[("", "Connectivity"), ("Wifi", "Wifi"), ("SIM", "SIM"), ("Both", "Both")])
     # Monitor
-    display_size = IntegerField("Display Size (Inch):")
-    hdmi_port = SelectField("HDMI Port (Yes/No):", choices=[("Yes", "Yes"), ("No", "No")])
-    speaker = SelectField("Speaker (Yes/No):", choices=[("Yes", "Yes"), ("No", "No")])
+    display_size = IntegerField("display_size")
+    hdmi_port = SelectField("hdmi_port", choices=[("Yes", "Yes"), ("No", "No")])
+    speaker = SelectField("speaker", choices=[("Yes", "Yes"), ("No", "No")])
     # UPS
     ups_capacity = IntegerField("ups_capacity")
     amc = SelectField("amc", choices=[("Yes", "Yes"), ("No", "No")])
     ups_start_date = DateField("ups_start_date")
     ups_end_date = DateField("ups_end_date")
 
-    submit = SubmitField("Submit")
+    submit = SubmitField("Submit Asset")

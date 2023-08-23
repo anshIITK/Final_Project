@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     
     __tablename__ = 'login_details'
     
-    id = db.Column(db.Integer, primary_key=True, default=1, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     office = db.Column(db.String(64))
     department = db.Column(db.String(64))
     employee_id = db.Column(db.String(64))
@@ -51,7 +51,7 @@ class Asset_Users(db.Model):
     retain_date = db.Column(db.String(50))
     retained_amount = db.Column(db.String(50))
 
-    assets = db.relationship('Asset_Details',backref='assigned_user', lazy=True)
+    # assets = db.relationship('Asset_Details',backref='assigned_user', lazy=True)
 
     def __init__(self, emp_id, username, email, contact_number, company, location, transfer_date, transfer_amount, transferred_from, transfer_to, issue_date, return_date, retain_date, retained_amount):
         self.user_employee_id = emp_id
@@ -72,17 +72,26 @@ class Asset_Users(db.Model):
 class Asset_Details(db.Model):
 
     __tablename__ = 'asset_details'
-    asset_users = db.relationship(Asset_Users)
+    # asset_users = db.relationship(Asset_Users)
 
     
     id = db.Column(db.Integer, primary_key= True, default=1, autoincrement=True)
-    user_emp_id = db.Column(db.String, db.ForeignKey('asset_users.user_employee_id'))
+    # user_emp_id = db.Column(db.String, db.ForeignKey('asset_users.user_employee_id'))
+    user_emp_id = db.Column(db.String(20))
     asset_number = db.Column(db.String(20))
     product_category = db.Column(db.String(20))
     product_name = db.Column(db.String(20))
     model_version = db.Column(db.String(20))
     manufacturer = db.Column(db.String(20))
     asset_status = db.Column(db.String(20))
+    user_name = db.Column(db.String(20))
+    employee_id = db.Column(db.String(20))
+    location = db.Column(db.String(20))
+    other_location = db.Column(db.String(20))
+    email = db.Column(db.String(20))
+    contact = db.Column(db.String(20))
+    company = db.Column(db.String(20))
+    other_company = db.Column(db.String(20))
     asset_category =db.Column(db.String(20))
     oem_serial_number = db.Column(db.String(20))
     system_host_name = db.Column(db.String(30))
@@ -146,19 +155,19 @@ class Asset_Details(db.Model):
 
 
 
-    def __init__(self, asset_number, product_category, product_name, model_version, manufacturer,
-                asset_status, asset_category, oem_serial_number, system_host_name, ip_address,
+    def __init__(self, asset_number, product_category, product_name, model_version, manufacturer,other_brand,
+                asset_status, user_name, employee_id, location, other_location, email, contact, company, other_company, asset_category, oem_serial_number, system_host_name, ip_address,
                 oem_asset_warranty, oem_warranty_expiry_date, insurance_coverage, insurance_company,
                 policy_number, insured_amount, start_date, end_date, supplier_name, supplier_contact,
                 supplier_location, supplier_email, incident_id, remarks, payment_done, payment_date,
-                voucher_number, disposal_date, disposal_amount, desk_lap_operating_system, desk_lap_hdd_type,
+                voucher_number, disposal_date, disposal_amount,device_type, desk_lap_os, desk_lap_hdd_type,
                 desk_lap_hdd_size, desk_lap_ram_type, desk_lap_ram_size, desk_lap_ram_frequency,
-                desk_lap_ram_expandable_upto, desk_lap_no_of_ram_slots, desk_lap_hdmi_port,
+                desk_lap_ram_expandable, desk_lap_ram_slots, desk_lap_hdmi_port,
                 desk_lap_display_size, desk_lap_graphics_card_size, desk_lap_graphics_card_version,
-                printer_type, printing_type, printer_toner_name, printer_connectivity, hdd_size,
-                hdd_type, hdd_connectivity, tab_os, tab_storage, tab_ram_size, tab_display_size,
-                tab_stylus, tab_connectivity, monitor_display_size, monitor_hdmi_port, monitor_speaker,
-                ups_capacity, ups_amc, ups_start_date, ups_end_date, source_of_purchase, contract_id,
+                printer_type, printing_type, printer_toner, printer_connectivity, hdd_size,
+                hdd_type, connectivity, tab_os, tab_storage, tab_ram_size, tab_display_size,
+                tab_stylus, tab_connectivity, display_size, hdmi_port, speaker,
+                ups_capacity, amc, ups_start_date, ups_end_date, source_of_purchase, contract_id,
                 invoice_amount, invoice_date, invoice_upload):
         
         self.asset_number = asset_number
@@ -166,7 +175,16 @@ class Asset_Details(db.Model):
         self.product_name = product_name
         self.model_version = model_version
         self.manufacturer = manufacturer
+        self.other_brand = other_brand
         self.asset_status = asset_status
+        self.user_name = user_name
+        self.employee_id = employee_id
+        self.location = location
+        self.other_location = other_location
+        self.email = email
+        self.contact = contact
+        self.company = company
+        self.other_company = other_company
         self.asset_category = asset_category
         self.oem_serial_number = oem_serial_number
         self.system_host_name = system_host_name
@@ -190,36 +208,37 @@ class Asset_Details(db.Model):
         self.voucher_number = voucher_number
         self.disposal_date = disposal_date
         self.disposal_amount = disposal_amount
-        self.desk_lap_operating_system = desk_lap_operating_system
+        self.device_type = device_type
+        self.desk_lap_os = desk_lap_os
         self.desk_lap_hdd_type = desk_lap_hdd_type
         self.desk_lap_hdd_size = desk_lap_hdd_size
         self.desk_lap_ram_type = desk_lap_ram_type
         self.desk_lap_ram_size = desk_lap_ram_size
         self.desk_lap_ram_frequency = desk_lap_ram_frequency
-        self.desk_lap_ram_expandable_upto = desk_lap_ram_expandable_upto
-        self.desk_lap_no_of_ram_slots = desk_lap_no_of_ram_slots
+        self.desk_lap_ram_expandable = desk_lap_ram_expandable
+        self.desk_lap_ram_slots = desk_lap_ram_slots
         self.desk_lap_hdmi_port = desk_lap_hdmi_port
         self.desk_lap_display_size = desk_lap_display_size
         self.desk_lap_graphics_card_size = desk_lap_graphics_card_size
         self.desk_lap_graphics_card_version = desk_lap_graphics_card_version
         self.printer_type = printer_type
         self.printing_type = printing_type
-        self.printer_toner_name = printer_toner_name
+        self.printer_toner = printer_toner
         self.printer_connectivity = printer_connectivity
         self.hdd_size = hdd_size
         self.hdd_type = hdd_type
-        self.hdd_connectivity = hdd_connectivity
+        self.connectivity = connectivity
         self.tab_os = tab_os
         self.tab_storage = tab_storage
         self.tab_ram_size = tab_ram_size
         self.tab_display_size = tab_display_size
         self.tab_stylus = tab_stylus
         self.tab_connectivity = tab_connectivity
-        self.monitor_display_size = monitor_display_size
-        self.monitor_hdmi_port = monitor_hdmi_port
-        self.monitor_speaker = monitor_speaker
+        self.display_size = display_size
+        self.hdmi_port = hdmi_port
+        self.speaker = speaker
         self.ups_capacity = ups_capacity
-        self.ups_amc = ups_amc
+        self.amc = amc
         self.ups_start_date = ups_start_date
         self.ups_end_date = ups_end_date
         self.source_of_purchase = source_of_purchase

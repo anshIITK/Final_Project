@@ -20,6 +20,8 @@ def register():
                     email = form.email.data,
                     username= form.username.data,
                     password= form.password.data)
+        # db.drop_all()
+        # db.create_all()
         db.session.add(user)
         db.session.commit()
         flash('Thanks for Registration!')
