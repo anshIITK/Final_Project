@@ -43,10 +43,10 @@ def bulk_upload():
 def add_asset():
     form = AddNewAssetForm()
 
-    if form.validate_on_submit():
+    if request.method == 'POST':
         new_asset = Asset_Details(asset_number= form.asset_number.data, product_category= form.product_category.data, 
                                   product_name = form.product_name.data, 
-                                  model_version= form.model_version.data, manufacturer = form.manufacturer.data, 
+                                  model_version= form.model_version.data, manufacturer = form.manufacturer.data, other_brand= form.other_brand.data,
                                   asset_status = form.asset_status.data, user_name=form.user_name.data, employee_id= form.employee_id.data, location=form.location.data,
                                   other_location=form.other_location.data, email=form.email.data, contact=form.contact.data, company=form.company.data, 
                                   other_company=form.other_company.data, asset_category= form.asset_category.data, 

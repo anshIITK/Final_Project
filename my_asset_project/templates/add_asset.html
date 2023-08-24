@@ -80,7 +80,7 @@
                 </div>
                 <div class="form-group col-md-4" id="other_brand" style="display: none;">
                     <label for="{{ form.other_brand.id }}">Other Brand:<span style="color: red;">*</span></label>
-                    {{ form.other_brand(class="form-control", id=form.other_brand.id, required="required") }}
+                    {{ form.other_brand(class="form-control", id=form.other_brand.id) }}
                 </div>
                
                 
@@ -398,18 +398,19 @@
 
         <script>
             function toggleOtherBrand() {
-                var manufacturerSelect = document.getElementById("{{ form.manufacturer.id }}");
-                var otherBrandInput = document.getElementById("other_brand");
-        
-                if (manufacturerSelect.value === "Others") {
-                    otherBrandInput.style.display = "block";
-                    otherBrandInput.querySelector("input").setAttribute("required", "required");
+                var manufacturerField = document.getElementById("manufacturer"); // Replace with the actual ID of the manufacturer field
+                var otherBrandField = document.getElementById("other_brand"); // Replace with the actual ID of the other brand field
+
+                if (manufacturerField.value === "Others") {
+                    otherBrandField.style.display = "block";
+                    otherBrandField.querySelector("input").setAttribute("required", "required");
                 } else {
-                    otherBrandInput.style.display = "none";
-                    otherBrandInput.querySelector("input").removeAttribute("required");
+                    otherBrandField.style.display = "none";
+                    otherBrandField.querySelector("input").removeAttribute("required");
                 }
             }
         </script>
+
         
         <script>
             function showDeviceSpecifications() {
@@ -428,35 +429,35 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_hdd_type.id }}">HDD Type:</label>
-                    {{ form.desk_lap_hdd_type(class="form-control", id=form.desk_lap_hdd_type.id, onchange="check()") }}
+                    {{ form.desk_lap_hdd_type(class="form-control", id=form.desk_lap_hdd_type.id) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_hdd_size.id }}">HDD Size (GB):</label>
-                    {{ form.desk_lap_hdd_size(class="form-control", id=form.desk_lap_hdd_size.id, onchange="check()") }}
+                    {{ form.desk_lap_hdd_size(class="form-control", id=form.desk_lap_hdd_size.id) }}
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_ram_type.id }}">RAM Type:</label>
-                    {{ form.desk_lap_ram_type(class="form-control", id=form.desk_lap_ram_type.id, onchange="check()") }}
+                    {{ form.desk_lap_ram_type(class="form-control", id=form.desk_lap_ram_type.id) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_ram_size.id }}">RAM Size:</label>
-                    {{ form.desk_lap_ram_size(class="form-control", id=form.desk_lap_ram_size.id, onchange="check()") }}
+                    {{ form.desk_lap_ram_size(class="form-control", id=form.desk_lap_ram_size.id) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_ram_frequency.id }}">RAM Frequency (MHz):</label>
-                    {{ form.desk_lap_ram_frequency(class="form-control", id=form.desk_lap_ram_frequency.id, onchange="check()") }}
+                    {{ form.desk_lap_ram_frequency(class="form-control", id=form.desk_lap_ram_frequency.id) }}
                 </div>
             </div>
             <div class="form-row">
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_ram_expandable.id }}">RAM Expandable Upto (GB):</label>
-                    {{ form.desk_lap_ram_expandable(class="form-control", id=form.desk_lap_ram_expandable.id, onchange="check()") }}
+                    {{ form.desk_lap_ram_expandable(class="form-control", id=form.desk_lap_ram_expandable.id) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_ram_slots.id }}">Number of RAM Slots:</label>
-                    {{ form.desk_lap_ram_slots(class="form-control", id=form.desk_lap_ram_slots.id, onchange="check()") }}
+                    {{ form.desk_lap_ram_slots(class="form-control", id=form.desk_lap_ram_slots.id) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_hdmi_port.id }}">HDMI Port (Yes/No):</label>
@@ -470,11 +471,11 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_graphics_card_size.id }}">Graphics Card Size (GB):</label>
-                    {{ form.desk_lap_graphics_card_size(class="form-control", id=form.desk_lap_graphics_card_size.id, onchange="check()") }}
+                    {{ form.desk_lap_graphics_card_size(class="form-control", id=form.desk_lap_graphics_card_size.id) }}
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.desk_lap_graphics_card_version.id }}">Graphics Card Version:</label>
-                    {{ form.desk_lap_graphics_card_version(class="form-control", id=form.desk_lap_graphics_card_version.id, onchange="check()") }}
+                    {{ form.desk_lap_graphics_card_version(class="form-control", id=form.desk_lap_graphics_card_version.id) }}
                 </div>
         </div>
 
@@ -525,7 +526,7 @@
                 </div>
                 <div class="form-group col-md-4">
                     <label for="{{ form.connectivity.id }}">Connectivity:</label>
-                    {{ form.connectivity(class="form-control", id=form.connectivity.id, onchange="check()") }}
+                    {{ form.connectivity(class="form-control", id=form.connectivity.id) }}
                 </div>
             </div>
 
@@ -559,7 +560,7 @@
             </div>
             <div class="form-group col-md-4">
                 <label for="{{ form.tab_connectivity.id }}">Connectivity:</label>
-                {{ form.tab_connectivity(class="form-control", id=form.tab_connectivity.id, onchange="check()") }}
+                {{ form.tab_connectivity(class="form-control", id=form.tab_connectivity.id) }}
             </div>
         </div>
 
@@ -618,11 +619,13 @@
                                 }
                                 
                             }
+                
+
         
                 function checkLocation() {
                     const locationDropdown = document.getElementById('location');
                     const otherLocationContainer = document.getElementById('otherLocationContainer');
-                    const otherLocationInput = document.getElementById('otherLocation');
+                    const otherLocationInput = document.getElementById('other_location');
                     
                     if (locationDropdown.value === 'Others') {
                         otherLocationContainer.style.display = 'block';
@@ -633,15 +636,15 @@
                     }
                 }
                 function checkCompany() {
-                    const CompanyDropdown = document.getElementById('Company');
+                    const CompanyDropdown = document.getElementById('company');
                     const otherCompanyContainer = document.getElementById('otherCompanyContainer');
-                    const otherCompanyInput = document.getElementById('otherCompany');
+                    const otherCompanyInput = document.getElementById('other_company');
                     
                     if (CompanyDropdown.value === 'Others') {
                         otherCompanyContainer.style.display = 'block';
                         otherCompanyInput.setAttribute('required', 'required');
                     } else {
-                        otherComapnyContainer.style.display = 'none';
+                        otherCompanyContainer.style.display = 'none';
                         otherCompanyInput.removeAttribute('required');
                     }
                 }
