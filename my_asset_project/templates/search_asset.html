@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block content %}    
+    <style>
+        body {
+            background-color: #f7f7f7;
+            font-family: Arial, sans-serif;
+        }
+        
+        .form-group {
+        
+            margin-bottom: 20px;
+            padding-right: 20px;
+        }
+        .form-row {
+        
+        margin-bottom: 20px;
+        padding-right: 20px;
+        }
+        
+        
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+
+        .container1 {
+        padding: 0 18px;
+        overflow: hidden;
+        background-color: #f1f1f1;
+        }
+
+        table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        margin-left: 10px;
+        }
+
+        th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+        }
+    </style>
+
+<div class="container">
+
+    <h1 class="text-center mb-4">Search Assets</h1>
+
+    <div class="form-group">
+  
+        <div class="container1">
+            <form class="flex-form" id="form1" method="get">
+                <!-- First row -->
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="assetnumber">Asset number</label>
+                        <input type="text" class="form-control" id="assetnumber" name="assetnumber">
+        
+                    </div>
+        
+                    <div class="form-group col-md-4">
+                        <label for="serialnumber">OEM Serial number</label>
+                        <input type="text" class="form-control" id="serialnumber" name="serialnumber">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="assetStatus">Asset Status</label>
+                            <select class="form-control" id="assetStatus" name="assetStatus">
+                                <option value="">Select an option</option>
+                                <option value="In Stock">In Stock</option>
+                                <option value="Assigned">Assigned</option>
+                                <option value="Not working">Not Working</option>
+                                <option value="Retained">Retained</option>
+                                <option value="End Of Life">End Of Life</option>
+                                <option value="Transferred">Transferred</option>
+                                <option value="Disposed">Disposed</option>
+                            </select>
+                    </div>
+                        
+                </div>
+                <div class="form-row">
+                    
+                    <div class="form-group col-md-4">
+                        <label for="userId">User ID</label>
+                        <input type="text" class="form-control" id="userId" name="userId">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="ProductCategory">Product Category</label>
+                        <select class="form-control" id="ProductCategory" name="ProductCategory">
+                            <option value="">Select an option</option>
+                            <option value="Desktop">Desktop</option>
+                            <option value="Laptop">Laptop</option>
+                            <option value="Monitor">Monitor</option>
+                            <option value="Server">Server</option>
+                            <option value="UPS">UPS</option>
+                            <option value="Storage">Storage</option>
+                            <option value="Tablet">Tablet</option>
+                            <option value="Mobile">Mobile</option>
+                        </select>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+
+                    
+                    <!-- Search button -->
+                    <div class="text-center mt-4">
+                        <button type="search" class="btn btn-primary">Search</button>
+                    </div>
+            </div>
+        <div id="results">
+            <table id="result-table">
+                <thead>
+                    <tr>
+                        <th>Asset Number</th>
+                        <th>Serial Number</th>
+                        <th>Asset Status</th>   
+                        <th>User ID</th>
+                        <th>Product Category</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Asset Number 1</td>
+                        <td>Serial Number 1</td>
+                        <td>Asset Status 1</td>
+                        <td>User ID 1</td>
+                        <td>Product Category 1</td>
+                        <td>
+                            <!-- Add a button or link for View/Edit -->
+                            <a href="add_asset.html">View /</a>
+                            <a href="add_asset.html">Edit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+ 
+</div>
+
+
+    
+    
+{% endblock %}

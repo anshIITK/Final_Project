@@ -1,12 +1,13 @@
 from flask import render_template, url_for, request, redirect, Blueprint, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from my_asset_project import db
-from my_asset_project.assets.forms import BulkUploadForm, AddNewAssetForm
+from my_asset_project.assets.forms import BulkUploadForm, AddNewAssetForm, AssetSearchForm
 import pandas as pd
 from my_asset_project.models import Asset_Details
 
 add_new_asset = Blueprint('add_asset', __name__)
 asset_upload = Blueprint('assets', __name__)
+asset_search = Blueprint('search_asset', __name__)
 
 
 #Bulk Upload
@@ -14,7 +15,7 @@ asset_upload = Blueprint('assets', __name__)
 def bulk_upload():
     form = BulkUploadForm()
 
-    if form.validate_on_submit():
+    if request.method== 'POST':
         excel_file = form.excel_file.data
         #Perform Excel upload operations on DB
         if excel_file:
@@ -88,3 +89,40 @@ def add_asset():
             return redirect(next)
     
     return render_template('add_asset.html', form=form)
+
+
+# Search Asset
+@asset_search.route('/search_asset', methods=['GET', 'POST'])
+def search_assets():
+    form = AssetSearchForm()
+
+    if request.method == 'POST':
+        # Get the form data
+        asset_number = request.form.get('asset_number')
+        oem_serial_number = request.form.get('oem_serial_number')
+        asset_status = request.form.get('asset_status')
+        employee_id = request.form.get('employee_id')
+        product_category = request.form.get('product_category')
+
+        # Build the query or fetch data from the database
+        # Your code to fetch and filter data goes here
+
+        # Placeholder for sample results
+       # Build the query dynamically based on the form data
+        query = Asset_Details.query
+        if asset_number:
+            query = query.filter(Asset_Details.asset_number == asset_number)
+        if oem_serial_number:
+            query = query.filter(Asset_Details.oem_serial_number == oem_serial_number)
+        if asset_status:
+            query = query.filter(Asset_Details.asset_status == asset_status)
+        if employee_id:
+            query = query.filter(Asset_Details.employee_id == employee_id)
+        if product_category:
+            query = query.filter(Asset_Details.product_category == product_category)
+
+        results = query.all()
+
+        return render_template('index.html', results=results)
+
+    return render_template('index.html', form=form)

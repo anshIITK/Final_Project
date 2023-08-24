@@ -175,3 +175,33 @@ class AddNewAssetForm(FlaskForm):
     ups_end_date = DateField("ups_end_date")
 
     submit = SubmitField("Submit Asset")
+
+
+
+
+class AssetSearchForm(FlaskForm):
+    asset_number = StringField('Asset number')
+    oem_serial_number = StringField('OEM Serial number')
+    asset_status = SelectField('Asset Status', choices=[
+        ('', 'Select an option'),
+        ('In Stock', 'In Stock'),
+        ('Assigned', 'Assigned'),
+        ('Not working', 'Not Working'),
+        ('Retained', 'Retained'),
+        ('End Of Life', 'End Of Life'),
+        ('Transferred', 'Transferred'),
+        ('Disposed', 'Disposed')
+    ])
+    employee_id = StringField('User Employee ID')
+    product_category = SelectField('Product Category', choices=[
+        ('', 'Select an option'),
+        ('Desktop', 'Desktop'),
+        ('Laptop', 'Laptop'),
+        ('Monitor', 'Monitor'),
+        ('Server', 'Server'),
+        ('UPS', 'UPS'),
+        ('Storage', 'Storage'),
+        ('Tablet', 'Tablet'),
+        ('Mobile', 'Mobile')
+    ])
+    submit = SubmitField('Search')
