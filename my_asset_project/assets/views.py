@@ -92,7 +92,7 @@ def add_asset():
 
 
 # Search Asset
-@asset_search.route('/search_asset', methods=['GET', 'POST'])
+@asset_search.route('/', methods=['GET', 'POST'])
 def search_assets():
     form = AssetSearchForm()
 
@@ -106,9 +106,6 @@ def search_assets():
 
         # Build the query or fetch data from the database
         # Your code to fetch and filter data goes here
-
-        # Placeholder for sample results
-       # Build the query dynamically based on the form data
         query = Asset_Details.query
         if asset_number:
             query = query.filter(Asset_Details.asset_number == asset_number)
@@ -123,6 +120,6 @@ def search_assets():
 
         results = query.all()
 
-        return render_template('index.html', results=results)
+        return render_template('index.html', results=results, form=form)
 
     return render_template('index.html', form=form)

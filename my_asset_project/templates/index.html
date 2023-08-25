@@ -3,11 +3,12 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4 md-4">Asset Management Portal</h1>
-            <!-- <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p> -->
         </div>
     </div>
     {%  if current_user.is_authenticated %}
     <style>
+
+
         body {
             background-color: #f7f7f7;
             font-family: Arial, sans-serif;
@@ -57,14 +58,14 @@
         }
     </style>
 
-    <div class="container">
+    <div class="container" >
     
         <h1 class="text-center mb-4">Search Assets</h1>
     
         <div class="container">
             <div class="form-group">
                 <div class="container1">
-                    <form class="flex-form" method="POST">
+                    <form class="flex-form" id="form-fields" method="POST">
                         {{ form.hidden_tag() }}
                         <!-- First row -->
                         <div class="form-row">
@@ -82,7 +83,7 @@
                             </div>
                         </div>
                         <!-- Second row -->
-                        <div class="form-row">
+                        <div class="form-row" id="form-fields">
                             <div class="form-group col-md-4">
                                 <label for="{{ form.employee_id.id }}">{{ form.employee_id.label }}</label>
                                 {{ form.employee_id(class="form-control", id=form.employee_id.id) }}
@@ -93,8 +94,9 @@
                             </div>
                         </div>
                         <!-- Search button -->
-                        <div class="text-center mt-4">
+                        <div class="text-center mt-4 mr-4">
                             {{ form.submit(class="btn btn-primary") }}
+                            <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
                         </div>
                     </form>
                 </div>
@@ -115,7 +117,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="result-rows">
                     {% for result in results %}
                         <tr>
                             <td>{{ result.asset_number }}</td>
@@ -123,11 +125,7 @@
                             <td>{{ result.asset_status }}</td>
                             <td>{{ result.employee_id }}</td>
                             <td>{{ result.product_category }}</td>
-                            <td>
-                                <!-- Add a button or link for View/Edit -->
-                                <a href="{{ url_for('view_asset', id=result.id) }}">View /</a>
-                                <a href="{{ url_for('edit_asset', id=result.id) }}">Edit</a>
-                            </td>
+                            
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -135,5 +133,19 @@
         </div>
         
     </div>
+    <script>
+        function clearForm() {
+            // Assuming "form" is the ID of your search form
+            var form = document.getElementById('form-fields');
+            form.reset();
+
+            // var assetStatusDropdown = document.getElementById('{{ form.asset_status.id }}');
+            // assetStatusDropdown.selectedIndex = 0;
+
+            var resultsDiv = document.getElementById('result-rows');
+            resultsDiv.innerHTML = '';
+        }
+    </script>
+    
     {% endif %}
 {% endblock %}
