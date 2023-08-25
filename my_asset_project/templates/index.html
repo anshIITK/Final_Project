@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-            <h1 class="display-4 md-4">Asset Management Portal</h1>
+    <div class="jumbotron jumbotron-fluid bg-info" >
+        <div class="container" style="height: 20px;">
+            <h1 class="display-4 md-4" style="font-size: 40px; text-align: center; color: azure;">Asset Management Portal</h1>
         </div>
     </div>
     {%  if current_user.is_authenticated %}
@@ -60,7 +60,7 @@
 
     <div class="container" >
     
-        <h1 class="text-center mb-4">Search Assets</h1>
+        <h1 class="text-center mb-4" style="font-size: 25px; padding: 4px; ">Search Assets</h1>
     
         <div class="container">
             <div class="form-group">

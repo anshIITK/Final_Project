@@ -9,29 +9,30 @@
     
 </head>
 <body>
-    <ul class="nav">
+    <ul class="nav bg-dark" style="padding: 14px;">
+        <img src=".\static\images\aic_logo.png" alt="Logo" style="max-height: 100px; margin-right: 10px; border-radius: 10px;">
         <li class="nav-link">
-            <a href="{{url_for('core.index')}}">Home</a>
+            <a href="{{url_for('core.index')}}" class="text-white" style="font-size: 20px;">Home</a>
         </li>
 
         {%  if current_user.is_authenticated %}
 
         <li class="nav-link">
-            <a href="{{url_for('users.logout')}}">Log Out</a>
+            <a href="{{url_for('users.logout')}}" class="text-white" style="position: absolute; top: 0; right: 0; margin: 16px; padding: 8px; border-radius: 12px; background-color:rgb(70, 70, 179);">Log Out</a>
         </li>
         <li class="nav-link">
-            <a href="{{url_for('add_asset.add_asset')}}">Add New Asset</a>
+            <a href="{{url_for('add_asset.add_asset')}}" class="text-white" style="font-size: 20px;">Add New Asset</a>
         </li>
         <li class="nav-link">
-            <a href="{{url_for('assets.bulk_upload')}}"> Bulk Upload Asset Data</a>
+            <a href="{{url_for('assets.bulk_upload')}}" class="text-white" style="font-size: 20px;"> Bulk Upload Asset Data</a>
         </li>
         {% else %}
         <li class="nav-link">
-            <a href="{{url_for('users.login')}}">Log In</a>
+            <a href="{{url_for('users.login')}}" class="text-white" style="position: absolute; top: 0; right: 0; margin: 16px; padding: 8px; border-radius: 12px; background-color:rgb(70, 70, 179);">Log In</a>
         </li>
 
         <li class="nav-link">
-            <a href="{{url_for('users.register')}}">Register</a>
+            <a href="{{url_for('users.register')}}" class="text-white" style="font-size: 20px;">Register</a>
         </li>
         {% endif %}
     </ul>

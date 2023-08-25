@@ -78,7 +78,7 @@ class Asset_Details(db.Model):
     id = db.Column(db.Integer, primary_key= True, autoincrement=True)
     # user_emp_id = db.Column(db.String, db.ForeignKey('asset_users.user_employee_id'))
     # user_emp_id = db.Column(db.String(20))
-    asset_number = db.Column(db.String(20))
+    asset_number = db.Column(db.String(20), unique=True)
     product_category = db.Column(db.String(20))
     product_name = db.Column(db.String(20))
     model_version = db.Column(db.String(20))
